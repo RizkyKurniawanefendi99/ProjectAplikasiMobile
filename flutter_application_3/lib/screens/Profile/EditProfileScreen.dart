@@ -1,9 +1,11 @@
-// ignore_for_file: unused_field, unused_import
+// ignore_for_file: unused_field, unused_import, prefer_const_constructors, curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/ProfileScreen.dart'; // Ganti dengan import yang sesuai
+import 'package:flutter_application_3/screens/Profile/ProfileScreen.dart'; // Ganti dengan import yang sesuai
 
 class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
+
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
@@ -21,7 +23,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: const Text('Edit Profile'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -31,7 +33,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Nama Pengguna'),
+                decoration: const InputDecoration(labelText: 'Nama Pengguna'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Nama pengguna tidak boleh kosong';
@@ -42,9 +44,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   _name = value!;
                 },
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Email tidak boleh kosong';
@@ -56,7 +58,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   _email = value!;
                 },
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Row(
                 children: [
                   Expanded(

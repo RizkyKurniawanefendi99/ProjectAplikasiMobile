@@ -379,7 +379,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      SignInScreen(), // Ganti dengan nama halaman Dashboard yang sesuai
+                                      const SignInScreen(), // Ganti dengan nama halaman Dashboard yang sesuai
                                 ),
                               );
                             } else if (!agreePersonalData) {

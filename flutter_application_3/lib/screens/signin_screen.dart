@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/DashboardScreen.dart';
+import 'package:flutter_application_3/navbar/navbar.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:flutter_application_3/screens/signup_screen.dart';
 import 'package:flutter_application_3/widgets/custom_scaffold.dart';
@@ -171,7 +171,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const DashboardScreen(), // Ganti dengan nama halaman Dashboard yang sesuai
+                                      const Navbar(), // Ganti dengan nama halaman Dashboard yang sesuai
                                 ),
                               );
                             } else if (!rememberPassword) {

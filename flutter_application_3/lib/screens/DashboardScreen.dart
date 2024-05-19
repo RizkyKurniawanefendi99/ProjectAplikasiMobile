@@ -1,30 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/ProfileScreen.dart';
+import 'package:flutter_application_3/screens/buy/BuyDrugScreen.dart';
+import 'package:flutter_application_3/screens/calender/CalenderScreen.dart';
+import 'package:flutter_application_3/screens/Profile/ProfileScreen.dart';
+import 'package:flutter_application_3/screens/Record/NotificationScreen.dart';
+import 'package:flutter_application_3/screens/Chat/MessageScreen.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key});
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dashboard'),
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications),
             onPressed: () {
-              // Tambahkan logika untuk menavigasi ke halaman notifikasi
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        NotificationScreen()), // ProfileScreen adalah nama kelas halaman profil Anda
+              );
             },
           ),
           IconButton(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             // Di dalam onPressed untuk IconButton profil
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        ProfileScreen()), // ProfileScreen adalah nama kelas halaman profil Anda
+                        const ProfileScreen()), // ProfileScreen adalah nama kelas halaman profil Anda
               );
             },
           ),
@@ -42,7 +52,7 @@ class DashboardScreen extends StatelessWidget {
                   color: Colors.blue, // Atur warna sesuai kebutuhan
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Promosi',
                     style: TextStyle(
@@ -53,7 +63,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                   height: 20), // Beri jarak antara kotak promosi dan GridView
               GridView.count(
                 crossAxisCount: 2,
@@ -61,7 +71,7 @@ class DashboardScreen extends StatelessWidget {
                 crossAxisSpacing: 10.0,
                 shrinkWrap: true,
                 physics:
-                    NeverScrollableScrollPhysics(), // Tidak memungkinkan untuk discroll
+                    const NeverScrollableScrollPhysics(), // Tidak memungkinkan untuk discroll
                 children: [
                   _buildDashboardItem(
                     context,
@@ -69,6 +79,11 @@ class DashboardScreen extends StatelessWidget {
                     Icons.event,
                     Colors.blue[700]!,
                     () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CalendarScreen()),
+                      );
                       // Tambahkan logika untuk menavigasi ke halaman Jadwal Dokter
                     },
                   ),
@@ -78,6 +93,12 @@ class DashboardScreen extends StatelessWidget {
                     Icons.chat,
                     Colors.blue[600]!,
                     () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MessageScreen()),
+                      );
+
                       // Tambahkan logika untuk menavigasi ke halaman Chat Dokter
                     },
                   ),
@@ -87,6 +108,12 @@ class DashboardScreen extends StatelessWidget {
                     Icons.medication,
                     Colors.blue[500]!,
                     () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BuyDrugScreen()),
+                      );
+
                       // Tambahkan logika untuk menavigasi ke halaman Menu Obat
                     },
                   ),
@@ -121,40 +148,6 @@ class DashboardScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.blue[900]!,
-              Colors.blue[700]!,
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today,
-                  color: Color.fromARGB(255, 0, 0, 0)),
-              label: 'Calendar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.message, color: Color.fromARGB(255, 0, 0, 0)),
-              label: 'Messages',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
-              label: 'Profile',
-            ),
-          ],
-          backgroundColor: Color.fromARGB(255, 0, 204, 255),
         ),
       ),
     );

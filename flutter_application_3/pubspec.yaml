@@ -37,6 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.6
   icons_plus: ^4.0.0
   flutter_datetime_picker_plus: ^2.1.0
+  table_calendar: ^3.0.5
+  qris: ^0.7.1
+  get: ^4.6.6
+  provider: ^6.0.0
 
 
 dev_dependencies:
@@ -64,6 +68,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/drug_placeholder.png
+    - assets/gopay.png
+    - assets/ovo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

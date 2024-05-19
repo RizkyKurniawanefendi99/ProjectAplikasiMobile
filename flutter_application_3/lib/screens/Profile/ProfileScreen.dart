@@ -1,36 +1,38 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/signin_screen.dart';// Ganti dengan import yang sesuai
-import 'package:flutter_application_3/screens/EditProfileScreen.dart'; // Import halaman edit profil
+import 'package:flutter/material.dart' show AlertDialog, Align, Alignment, AppBar, BorderRadius, BoxDecoration, BoxFit, BoxShadow, BoxShape, BuildContext, ClipOval, Color, Colors, Column, Container, CrossAxisAlignment, EdgeInsets, ElevatedButton, Expanded, FontWeight, Icon, IconButton, IconData, Icons, Image, LinearGradient, MainAxisAlignment, MaterialPageRoute, Navigator, Offset, Padding, Radius, Row, Scaffold, SingleChildScrollView, SizedBox, StatelessWidget, Text, TextAlign, TextButton, TextStyle, Widget, showDialog;
+import 'package:flutter_application_3/screens/signin_screen.dart'; // Ganti dengan import yang sesuai
+import 'package:flutter_application_3/screens/Profile/EditProfileScreen.dart'; // Import halaman edit profil
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications),
             onPressed: () {
               // Tambahkan logika untuk menampilkan notifikasi
             },
           ),
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               // Tampilkan dialog konfirmasi logout
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text("Konfirmasi Logout"),
-                    content: Text("Apakah Anda yakin ingin logout?"),
+                    title: const Text("Konfirmasi Logout"),
+                    content: const Text("Apakah Anda yakin ingin logout?"),
                     actions: [
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop(); // Tutup dialog
                         },
-                        child: Text("Batal"),
+                        child: const Text("Batal"),
                       ),
                       TextButton(
                         onPressed: () {
@@ -38,10 +40,10 @@ class ProfileScreen extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignInScreen()),
+                                builder: (context) => const SignInScreen()),
                           );
                         },
-                        child: Text("Logout"),
+                        child: const Text("Logout"),
                       ),
                     ],
                   );
@@ -58,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                children: [
+                children: <Widget>[
                   Container(
                     width: 100,
                     height: 100,
@@ -69,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 3,
                           blurRadius: 5,
-                          offset: Offset(0, 3), // changes position of shadow
+                          offset: const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
@@ -80,8 +82,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 20.0),
-                  Expanded(
+                  const SizedBox(width: 20.0),
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -110,7 +112,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Align(
                 alignment: Alignment.centerLeft,
                 child: ElevatedButton(
@@ -118,13 +120,14 @@ class ProfileScreen extends StatelessWidget {
                     // Navigasi ke halaman edit profil
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => EditProfileScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => EditProfileScreen()),
                     );
                   },
-                  child: Text('Edit Profil'),
+                  child: const Text('Edit Profil'),
                 ),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Row(
                 children: [
                   Expanded(
@@ -133,7 +136,7 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         _buildRoundedBox(Icons.favorite, 'Detak Jantung',
                             '75 bpm', [Colors.lightBlueAccent, Colors.blue]),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         _buildRoundedBox(
                             Icons.local_hospital,
                             'Tekanan Darah',
@@ -142,14 +145,14 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _buildRoundedBox(Icons.assessment, 'Gula Darah',
                             '100 mg/dL', [Colors.lightBlueAccent, Colors.blue]),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         _buildRoundedBox(Icons.eco, 'Kolesterol', '150 mg/dL',
                             [Colors.lightBlueAccent, Colors.blue]),
                       ],
@@ -157,7 +160,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -169,7 +172,7 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -184,22 +187,6 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Messages',
-          ),
-        ],
       ),
     );
   }
@@ -223,7 +210,7 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 3,
                 blurRadius: 5,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), 
               ),
             ],
           ),
@@ -235,19 +222,19 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.white,
                 size: 40,
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 parameter,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 value,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14.0,
                   color: Colors.white,
                 ),
@@ -255,20 +242,20 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Container(
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.blueGrey,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(10.0),
               bottomRight: Radius.circular(10.0),
             ),
           ),
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Text(
-            'Perbarui ' + parameter.toLowerCase(),
-            style: TextStyle(
+            'Perbarui ${parameter.toLowerCase()}',
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
