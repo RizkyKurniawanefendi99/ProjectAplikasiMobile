@@ -1,124 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/Payment/PayScreenBooking.dart';
 
-class MessageScreen extends StatefulWidget {
-  @override
-  _MessageScreenState createState() => _MessageScreenState();
-}
-
-class _MessageScreenState extends State<MessageScreen> {
-  List<String> doctors = [
-    "Dr. Roki",
-    "Dr. Paijo",
-    "Dr. Iqbal",
-    "Dr. Rizky",
-  ];
-
-  String selectedDoctor = "Dr. Rizky";
-  String? _searchTerm;
-
-  List<String> messages = [
-    "Selamat pagi, Dok!",
-    "Saya ingin membuat janji untuk bertemu dengan Anda.",
-  ];
-
-  TextEditingController messageController = TextEditingController();
-
+class MessageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final filteredDoctors = _searchTerm == null || _searchTerm!.isEmpty
-        ? doctors
-        : doctors
-            .where((doctor) =>
-                doctor.toLowerCase().contains(_searchTerm!.toLowerCase()))
-            .toList();
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat Dokter'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(
-                  context: context, delegate: DoctorSearchDelegate(doctors));
-            },
-          ),
-        ],
+        title: Text('Chat Bersama Dokter'),
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: DropdownButtonFormField<String>(
-              value: selectedDoctor,
-              onChanged: (newValue) {
-                setState(() {
-                  selectedDoctor = newValue!;
-                });
-              },
-              items: filteredDoctors.map((doctor) {
-                return DropdownMenuItem(
-                  value: doctor,
-                  child: Text(doctor),
-                );
-              }).toList(),
+          Container(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Cari dokter, spesialisasi, lab test',
+                border: OutlineInputBorder(),
+                suffixIcon: Icon(Icons.search),
+              ),
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 4.0, horizontal: 16.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100],
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    padding: EdgeInsets.all(12.0),
-                    child: Text(
-                      messages[index],
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
+            child: ListView(
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: messageController,
-                    decoration: InputDecoration(
-                      hintText: 'Ketik pesan Anda...',
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
+                DoctorCard(
+                  name: 'Chat Dokter Umum',
+                  specialty: '',
+                  price: 17500,
+                  oldPrice: null,
+                  isOnline: true,
+                  satisfaction: 92,
+                  reviews: 686,
+                  imagePath: 'assets/images/dokter_umum.jpg',
                 ),
-                SizedBox(width: 10),
-                MaterialButton(
-                  onPressed: () {
-                    String newMessage = messageController.text;
-                    setState(() {
-                      messages.add(newMessage);
-                      messageController.clear();
-                    });
-                  },
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  child: Text('Kirim'),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
+                DoctorCard(
+                  name: 'dr. Suryanto Plokoto, Sp.PD',
+                  specialty: 'Doctor Kandungan',
+                  price: 45000,
+                  oldPrice: 60000,
+                  isOnline: true,
+                  satisfaction: 88,
+                  reviews: 1768,
+                  imagePath: 'assets/images/dr_suryanto.jpg',
+                ),
+                DoctorCard(
+                  name: 'dr. Mariadi Jaedi, Sp.PhD',
+                  specialty: 'Doctor Gigi',
+                  price: 45000,
+                  oldPrice: 60000,
+                  isOnline: true,
+                  satisfaction: 89,
+                  reviews: 1768,
+                  imagePath: 'assets/images/dr_mariadi.jpg',
+                ),
+                DoctorCard(
+                  name: 'dr. Maemunah Dui, Sp.PD',
+                  specialty: '',
+                  price: 45000,
+                  oldPrice: 60000,
+                  isOnline: true,
+                  satisfaction: 97,
+                  reviews: 2913,
+                  imagePath: 'assets/images/dr_maemunah.jpg',
                 ),
               ],
             ),
@@ -129,67 +72,109 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 }
 
-class DoctorSearchDelegate extends SearchDelegate<String> {
-  final List<String> doctors;
+class DoctorCard extends StatelessWidget {
+  final String name;
+  final String specialty;
+  final int price;
+  final int? oldPrice;
+  final bool isOnline;
+  final int satisfaction;
+  final int reviews;
+  final String imagePath;
 
-  DoctorSearchDelegate(this.doctors);
+  DoctorCard({
+    required this.name,
+    required this.specialty,
+    required this.price,
+    this.oldPrice,
+    required this.isOnline,
+    required this.satisfaction,
+    required this.reviews,
+    required this.imagePath,
+  });
 
   @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage(imagePath),
+              radius: 30,
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  if (specialty.isNotEmpty)
+                    Text(
+                      specialty,
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  Row(
+                    children: [
+                      Icon(Icons.star, color: Colors.yellow, size: 20),
+                      Text('$satisfaction%'),
+                      SizedBox(width: 5),
+                      Text('($reviews ulasan)'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Rp. ${price.toString()}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                      if (oldPrice != null) SizedBox(width: 5),
+                      if (oldPrice != null)
+                        Text(
+                          'Rp. ${oldPrice.toString()}',
+                          style: TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.red,
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                if (isOnline) Icon(Icons.circle, color: Colors.green, size: 14),
+                SizedBox(height: 5),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PaymentBokingMethodScreen(
+                          doctorName: name,
+                          doctorSpecialty: specialty,
+                          consultationFee: price,
+                          imagePath: imagePath,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text('Mulai Chat'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, '');
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    final filteredDoctors = doctors
-        .where((doctor) => doctor.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    return ListView.builder(
-      itemCount: filteredDoctors.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(filteredDoctors[index]),
-          onTap: () {
-            close(context, filteredDoctors[index]);
-          },
-        );
-      },
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final filteredDoctors = doctors
-        .where((doctor) => doctor.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    return ListView.builder(
-      itemCount: filteredDoctors.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(filteredDoctors[index]),
-          onTap: () {
-            query = filteredDoctors[index];
-            showResults(context);
-          },
-        );
-      },
     );
   }
 }

@@ -8,20 +8,19 @@ import 'package:flutter_application_3/screens/Payment/PayOvo.dart';
 import 'package:flutter_application_3/screens/Payment/PayPermata.dart';
 import 'package:flutter_application_3/screens/Payment/PayShopee.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PaymentBokingMethodScreen(),
-    );
-  }
-}
-
 class PaymentBokingMethodScreen extends StatelessWidget {
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  PaymentBokingMethodScreen({
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +32,12 @@ class PaymentBokingMethodScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PurchaseSummary(),
+            DoctorSummary(
+              doctorName: doctorName,
+              doctorSpecialty: doctorSpecialty,
+              consultationFee: consultationFee,
+              imagePath: imagePath,
+            ),
             SizedBox(height: 16),
             PaymentMethods(),
           ],
@@ -43,7 +47,19 @@ class PaymentBokingMethodScreen extends StatelessWidget {
   }
 }
 
-class PurchaseSummary extends StatelessWidget {
+class DoctorSummary extends StatelessWidget {
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  DoctorSummary({
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -52,15 +68,28 @@ class PurchaseSummary extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Ringkasan Pembayaran Dokter',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(imagePath),
+                  radius: 30,
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(doctorName, style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(doctorSpecialty),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            Text('Detail Pembayaran', style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
-            SummaryItem(title: 'Biaya Konsultasi', amount: 'Rp150.000'),
-            SummaryItem(title: 'Biaya Administrasi', amount: 'Rp10.000'),
-            SummaryItem(title: 'Diskon', amount: '-Rp20.000'),
+            SummaryItem(title: 'Biaya Konsultasi', amount: 'Rp$consultationFee'),
             Divider(),
-            SummaryItem(
-                title: 'Total Bayar', amount: 'Rp140.000', isTotal: true),
+            SummaryItem(title: 'Total Bayar', amount: 'Rp$consultationFee', isTotal: true),
           ],
         ),
       ),
@@ -73,8 +102,11 @@ class SummaryItem extends StatelessWidget {
   final String amount;
   final bool isTotal;
 
-  SummaryItem(
-      {required this.title, required this.amount, this.isTotal = false});
+  SummaryItem({
+    required this.title,
+    required this.amount,
+    this.isTotal = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +115,8 @@ class SummaryItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,
-              style: TextStyle(
-                  fontWeight: isTotal ? FontWeight.bold : FontWeight.normal)),
-          Text(amount,
-              style: TextStyle(color: isTotal ? Colors.orange : Colors.black)),
+          Text(title, style: TextStyle(fontWeight: isTotal ? FontWeight.bold : FontWeight.normal)),
+          Text(amount, style: TextStyle(color: isTotal ? Colors.orange : Colors.black)),
         ],
       ),
     );
@@ -195,8 +224,7 @@ class PaymentMethodSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         SizedBox(height: 8),
         Column(
           children: methods,
@@ -213,11 +241,12 @@ class PaymentMethod extends StatelessWidget {
   final bool hasIcon;
   final VoidCallback? onTap;
 
-  PaymentMethod(
-      {required this.name,
-      required this.logo,
-      this.hasIcon = false,
-      this.onTap});
+  PaymentMethod({
+    required this.name,
+    required this.logo,
+    this.hasIcon = false,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter_application_3/screens/Chat/ChatScreen.dart';
+
 class PayBRI extends StatefulWidget {
   @override
   _PayBRIState createState() => _PayBRIState();
@@ -68,7 +70,10 @@ class _PayBRIState extends State<PayBRI> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChatScreen()),
+              );
               // Navigate back or to another page if needed
             },
             child: Text('OK'),
@@ -89,7 +94,10 @@ class _PayBRIState extends State<PayBRI> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PaymentTimer(timeLeft: formatDuration(duration), deadline: deadline,),
+            PaymentTimer(
+              timeLeft: formatDuration(duration),
+              deadline: deadline,
+            ),
             SizedBox(height: 16),
             PaymentDetails(),
             SizedBox(height: 16),

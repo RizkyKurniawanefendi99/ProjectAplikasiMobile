@@ -10,7 +10,7 @@ class AppPage {
     GetPage(name: navbar, page: () =>  const Navbar()),
     GetPage(name: dashboard, page: () => const DashboardScreen()),
     GetPage(name: boking, page: () => CalendarScreen()),
-    GetPage(name: profil, page: () => const ProfileScreen()),
+    GetPage(name: profil, page: () => ProfileScreen()),
   ];
 
   static getanvbar() => Navbar;

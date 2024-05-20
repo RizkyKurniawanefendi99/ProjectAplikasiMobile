@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/Payment/PayScreenBooking.dart';
+import 'package:flutter_application_3/screens/Payment/PayScreen.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -125,7 +125,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  PaymentBokingMethodScreen()),
+                                                  PaymentMethodScreen()),
                                         );
                                       },
                                     ),
