@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/Artikel/ArticleHomecopy.dart';
 import 'package:flutter_application_3/screens/buy/BuyDrugScreen.dart';
 import 'package:flutter_application_3/screens/calender/CalenderScreen.dart';
 import 'package:flutter_application_3/screens/Profile/ProfileScreen.dart';
 import 'package:flutter_application_3/screens/Record/NotificationScreen.dart';
 import 'package:flutter_application_3/screens/Chat/MessageScreen.dart';
+import 'package:flutter_application_3/screens/recordmedic/RecordMedic.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -123,6 +125,11 @@ class DashboardScreen extends StatelessWidget {
                     Icons.article,
                     Colors.blue[400]!,
                     () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => InstagramDashboard()),
+                      );
                       // Tambahkan logika untuk menavigasi ke halaman Menu Artikel
                     },
                   ),
@@ -132,6 +139,10 @@ class DashboardScreen extends StatelessWidget {
                     Icons.history,
                     Colors.blue[300]!,
                     () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RecordMedic()),
+                      );
                       // Tambahkan logika untuk menavigasi ke halaman Riwayat Penyakit
                     },
                   ),
