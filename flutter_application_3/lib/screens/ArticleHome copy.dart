@@ -34,7 +34,7 @@ class _InstagramDashboardState extends State<InstagramDashboard> {
                 return PostItem(
                   judul:
                       'Cara Menjaga Kesehatan Tubuh Agar Terhindar dari Penyakit$index',
-                  gambar: 'assets/artikel1.jpg',
+                  gambar: 'assets/images/artikel1.jpg',
                   content: loremIpsum(words: 30, initWithLorem: true),
                 );
                 Divider();
