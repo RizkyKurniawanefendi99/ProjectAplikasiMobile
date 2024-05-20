@@ -41,9 +41,6 @@ dependencies:
   qris: ^0.7.1
   get: ^4.6.6
   provider: ^6.0.0
-  image_picker: ^1.1.1
-  lorem_ipsum: any
-  http: ^0.13.3
 
 
 dev_dependencies:
