@@ -41,6 +41,7 @@ dependencies:
   qris: ^0.7.1
   get: ^4.6.6
   provider: ^6.0.0
+  lorem_ipsum: any
 
 
 dev_dependencies:
