@@ -4,7 +4,6 @@ import 'package:flutter_application_3/screens/calender/CalenderScreen.dart';
 import 'package:flutter_application_3/screens/Profile/ProfileScreen.dart';
 import 'package:flutter_application_3/screens/Record/NotificationScreen.dart';
 import 'package:flutter_application_3/screens/Chat/MessageScreen.dart';
-import 'package:flutter_application_3/screens/recordmedic/RecordMedic.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -124,12 +123,6 @@ class DashboardScreen extends StatelessWidget {
                     Icons.article,
                     Colors.blue[400]!,
                     () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProfileScreen())
-                          // Tambahkan logika untuk menavigasi ke halaman Riwayat Penyakit
-                          );
                       // Tambahkan logika untuk menavigasi ke halaman Menu Artikel
                     },
                   ),
@@ -139,16 +132,13 @@ class DashboardScreen extends StatelessWidget {
                     Icons.history,
                     Colors.blue[300]!,
                     () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => RecordMedic())
-                          // Tambahkan logika untuk menavigasi ke halaman Riwayat Penyakit
-                          );
+                      // Tambahkan logika untuk menavigasi ke halaman Riwayat Penyakit
                     },
                   ),
                   _buildDashboardItem(
                     context,
-                    'Member',
-                    Icons.card_membership,
+                    'Booking',
+                    Icons.calendar_today,
                     Colors.blue[200]!,
                     () {
                       // Tambahkan logika untuk menavigasi ke halaman Booking
@@ -190,7 +180,7 @@ class DashboardScreen extends StatelessWidget {
             ),
             title: Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
