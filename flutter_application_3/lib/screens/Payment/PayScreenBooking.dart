@@ -14,7 +14,7 @@ class PaymentBokingMethodScreen extends StatelessWidget {
   final int consultationFee;
   final String imagePath;
 
-  PaymentBokingMethodScreen({
+  const PaymentBokingMethodScreen({super.key, 
     required this.doctorName,
     required this.doctorSpecialty,
     required this.consultationFee,
@@ -25,7 +25,7 @@ class PaymentBokingMethodScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pilih Metode Pembayaran'),
+        title: const Text('Pilih Metode Pembayaran'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -38,8 +38,15 @@ class PaymentBokingMethodScreen extends StatelessWidget {
               consultationFee: consultationFee,
               imagePath: imagePath,
             ),
-            SizedBox(height: 16),
-            PaymentMethods(),
+            const SizedBox(height: 16),
+            Expanded(
+              child: PaymentMethods(
+                doctorName: doctorName,
+                doctorSpecialty: doctorSpecialty,
+                consultationFee: consultationFee,
+                imagePath: imagePath,
+              ),
+            ),
           ],
         ),
       ),
@@ -53,7 +60,7 @@ class DoctorSummary extends StatelessWidget {
   final int consultationFee;
   final String imagePath;
 
-  DoctorSummary({
+  const DoctorSummary({super.key, 
     required this.doctorName,
     required this.doctorSpecialty,
     required this.consultationFee,
@@ -74,22 +81,28 @@ class DoctorSummary extends StatelessWidget {
                   backgroundImage: AssetImage(imagePath),
                   radius: 30,
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(doctorName, style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(doctorName,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                     Text(doctorSpecialty),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            Text('Detail Pembayaran', style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            SummaryItem(title: 'Biaya Konsultasi', amount: 'Rp$consultationFee'),
-            Divider(),
-            SummaryItem(title: 'Total Bayar', amount: 'Rp$consultationFee', isTotal: true),
+            const SizedBox(height: 16),
+            const Text('Detail Pembayaran',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            SummaryItem(
+                title: 'Biaya Konsultasi', amount: 'Rp$consultationFee'),
+            const Divider(),
+            SummaryItem(
+                title: 'Total Bayar',
+                amount: 'Rp$consultationFee',
+                isTotal: true),
           ],
         ),
       ),
@@ -102,7 +115,7 @@ class SummaryItem extends StatelessWidget {
   final String amount;
   final bool isTotal;
 
-  SummaryItem({
+  const SummaryItem({super.key, 
     required this.title,
     required this.amount,
     this.isTotal = false,
@@ -115,8 +128,11 @@ class SummaryItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: isTotal ? FontWeight.bold : FontWeight.normal)),
-          Text(amount, style: TextStyle(color: isTotal ? Colors.orange : Colors.black)),
+          Text(title,
+              style: TextStyle(
+                  fontWeight: isTotal ? FontWeight.bold : FontWeight.normal)),
+          Text(amount,
+              style: TextStyle(color: isTotal ? Colors.orange : Colors.black)),
         ],
       ),
     );
@@ -124,91 +140,108 @@ class SummaryItem extends StatelessWidget {
 }
 
 class PaymentMethods extends StatelessWidget {
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  const PaymentMethods({super.key, 
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView(
-        children: [
-          PaymentMethodSection(title: 'E-Wallet', methods: [
-            PaymentMethod(
-                name: 'GoPay / GoPayLater',
-                logo: 'assets/gopay.png',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PayGoPay()),
-                  );
-                }),
-            PaymentMethod(
-                name: 'OVO',
-                logo: 'assets/ovo.png',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PayOvo()),
-                  );
-                }),
-            PaymentMethod(
-                name: 'ShopeePay',
-                logo: 'assets/images/shopeepay.png',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PayShopee()),
-                  );
-                }),
-          ]),
-          PaymentMethodSection(
-              title: 'Transfer Virtual Account (Verifikasi Otomatis)',
-              methods: [
-                PaymentMethod(
-                    name: 'Bank Permata',
-                    logo: 'assets/images/permata.png',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PayPermata()),
-                      );
-                    }),
-                PaymentMethod(
-                    name: 'Bank BCA',
-                    logo: 'assets/images/bca.png',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PayBCA()),
-                      );
-                    }),
-                PaymentMethod(
-                    name: 'Bank Mandiri',
-                    logo: 'assets/images/mandiri.png',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PayMandiri()),
-                      );
-                    }),
-                PaymentMethod(
-                    name: 'Bank BNI',
-                    logo: 'assets/images/bni.png',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PayBNI()),
-                      );
-                    }),
-                PaymentMethod(
-                    name: 'Bank BRI',
-                    logo: 'assets/images/bri.png',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PayBRI()),
-                      );
-                    }),
-              ]),
-        ],
-      ),
+    return ListView(
+      children: [
+        PaymentMethodSection(title: 'E-Wallet', methods: [
+          PaymentMethod(
+              name: 'GoPay / GoPayLater',
+              logo: 'assets/gopay.png',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PayGoPay()),
+                );
+              }),
+          PaymentMethod(
+              name: 'OVO',
+              logo: 'assets/ovo.png',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PayOvo()),
+                );
+              }),
+          PaymentMethod(
+              name: 'ShopeePay',
+              logo: 'assets/images/shopeepay.png',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PayShopee()),
+                );
+              }),
+        ]),
+        PaymentMethodSection(
+            title: 'Transfer Virtual Account (Verifikasi Otomatis)',
+            methods: [
+              PaymentMethod(
+                  name: 'Bank Permata',
+                  logo: 'assets/images/permata.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PayPermata()),
+                    );
+                  }),
+              PaymentMethod(
+                  name: 'Bank BCA',
+                  logo: 'assets/images/bca.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PayBCA()),
+                    );
+                  }),
+              PaymentMethod(
+                  name: 'Bank Mandiri',
+                  logo: 'assets/images/mandiri.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PayMandiri()),
+                    );
+                  }),
+              PaymentMethod(
+                  name: 'Bank BNI',
+                  logo: 'assets/images/bni.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PayBNI(
+                          doctorName: doctorName,
+                          doctorSpecialty: doctorSpecialty,
+                          consultationFee: consultationFee,
+                          imagePath: imagePath,
+                        ),
+                      ),
+                    );
+                  }),
+              PaymentMethod(
+                  name: 'Bank BRI',
+                  logo: 'assets/images/bri.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PayBRI()),
+                    );
+                  }),
+            ]),
+      ],
     );
   }
 }
@@ -217,19 +250,20 @@ class PaymentMethodSection extends StatelessWidget {
   final String title;
   final List<PaymentMethod> methods;
 
-  PaymentMethodSection({required this.title, required this.methods});
+  const PaymentMethodSection({super.key, required this.title, required this.methods});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        SizedBox(height: 8),
+        Text(title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        const SizedBox(height: 8),
         Column(
           children: methods,
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
       ],
     );
   }
@@ -241,7 +275,7 @@ class PaymentMethod extends StatelessWidget {
   final bool hasIcon;
   final VoidCallback? onTap;
 
-  PaymentMethod({
+  const PaymentMethod({super.key, 
     required this.name,
     required this.logo,
     this.hasIcon = false,
@@ -251,7 +285,7 @@ class PaymentMethod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.grey),
@@ -261,14 +295,14 @@ class PaymentMethod extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: ListTile(
         leading: Image.asset(logo, width: 40, height: 40),
         title: Text(name),
-        trailing: hasIcon ? Icon(Icons.arrow_forward) : null,
+        trailing: hasIcon ? const Icon(Icons.arrow_forward) : null,
         onTap: onTap,
       ),
     );

@@ -87,7 +87,7 @@ class HistoryScreen extends StatelessWidget {
           );
         }, // Tambahkan ikon 'done'
         backgroundColor: Colors.blue,
-        child: Icon(Icons.done), // Warna latar belakang
+        child: const Icon(Icons.done), // Warna latar belakang
       ),
     );
   }

@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/screens/Payment/PayScreenBooking.dart';
 
 class MessageScreen extends StatelessWidget {
+  const MessageScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat Bersama Dokter'),
+        title: const Text('Chat Bersama Dokter'),
       ),
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(8.0),
-            child: TextField(
+            padding: const EdgeInsets.all(8.0),
+            child: const TextField(
               decoration: InputDecoration(
                 hintText: 'Cari dokter, spesialisasi, lab test',
                 border: OutlineInputBorder(),
@@ -22,7 +24,7 @@ class MessageScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-              children: [
+              children: const [
                 DoctorCard(
                   name: 'Chat Dokter Umum',
                   specialty: '',
@@ -82,7 +84,7 @@ class DoctorCard extends StatelessWidget {
   final int reviews;
   final String imagePath;
 
-  DoctorCard({
+  const DoctorCard({super.key, 
     required this.name,
     required this.specialty,
     required this.price,
@@ -96,34 +98,34 @@ class DoctorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Row(
           children: [
             CircleAvatar(
               backgroundImage: AssetImage(imagePath),
               radius: 30,
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     name,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   if (specialty.isNotEmpty)
                     Text(
                       specialty,
-                      style: TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   Row(
                     children: [
-                      Icon(Icons.star, color: Colors.yellow, size: 20),
+                      const Icon(Icons.star, color: Colors.yellow, size: 20),
                       Text('$satisfaction%'),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text('($reviews ulasan)'),
                     ],
                   ),
@@ -131,16 +133,16 @@ class DoctorCard extends StatelessWidget {
                     children: [
                       Text(
                         'Rp. ${price.toString()}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.green,
                         ),
                       ),
-                      if (oldPrice != null) SizedBox(width: 5),
+                      if (oldPrice != null) const SizedBox(width: 5),
                       if (oldPrice != null)
                         Text(
                           'Rp. ${oldPrice.toString()}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             decoration: TextDecoration.lineThrough,
                             color: Colors.red,
                           ),
@@ -152,8 +154,8 @@ class DoctorCard extends StatelessWidget {
             ),
             Column(
               children: [
-                if (isOnline) Icon(Icons.circle, color: Colors.green, size: 14),
-                SizedBox(height: 5),
+                if (isOnline) const Icon(Icons.circle, color: Colors.green, size: 14),
+                const SizedBox(height: 5),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -168,7 +170,7 @@ class DoctorCard extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('Mulai Chat'),
+                  child: const Text('Mulai Chat'),
                 ),
               ],
             ),

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class PaymentSuccess extends StatelessWidget {
+  const PaymentSuccess({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payment Success'),
+        title: const Text('Payment Success'),
         backgroundColor: Colors.blue,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -20,13 +22,13 @@ class PaymentSuccess extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(
+              const Icon(
                 Icons.check_circle_outline,
                 size: 120,
                 color: Colors.blue,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
                   'Payment Success!',
                   style: TextStyle(
@@ -43,7 +45,7 @@ class PaymentSuccess extends StatelessWidget {
                   color: Colors.blue[900],
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Text(
                 '\$1,250.50',
                 style: TextStyle(
@@ -52,7 +54,7 @@ class PaymentSuccess extends StatelessWidget {
                   color: Colors.blue[900],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 'Merchant Nickname: Swellcorp',
                 style: TextStyle(

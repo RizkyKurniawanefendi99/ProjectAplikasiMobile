@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 class PayOvo extends StatefulWidget {
+  const PayOvo({super.key});
+
   @override
   _PayOvoState createState() => _PayOvoState();
 }
@@ -115,7 +117,7 @@ class PaymentTimer extends StatelessWidget {
   final String timeLeft;
   final DateTime deadline;
 
-  PaymentTimer({required this.timeLeft, required this.deadline});
+  const PaymentTimer({super.key, required this.timeLeft, required this.deadline});
 
   @override
   Widget build(BuildContext context) {
@@ -164,6 +166,8 @@ class PaymentTimer extends StatelessWidget {
 }
 
 class PaymentDetails extends StatelessWidget {
+  const PaymentDetails({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -228,10 +232,12 @@ class PaymentDetails extends StatelessWidget {
 }
 
 class PaymentInstructions extends StatelessWidget {
+  const PaymentInstructions({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: [
+      children: const [
         ExpansionTile(
           title: Text('Panduan Pembayaran'),
           children: [

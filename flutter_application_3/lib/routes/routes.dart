@@ -9,14 +9,14 @@ class AppPage {
   static List<GetPage> routes = [
     GetPage(name: navbar, page: () =>  const Navbar()),
     GetPage(name: dashboard, page: () => const DashboardScreen()),
-    GetPage(name: boking, page: () => CalendarScreen()),
-    GetPage(name: profil, page: () => ProfileScreen()),
+    GetPage(name: boking, page: () => const CalendarScreen()),
+    GetPage(name: profil, page: () => const ProfileScreen()),
   ];
 
   static getanvbar() => Navbar;
   static getdashboard() => DashboardScreen;
-  static getchat() => MessageScreen();
-  static getbokking() => CalendarScreen();
+  static getchat() => const MessageScreen();
+  static getbokking() => const CalendarScreen();
   static getprofil() => ProfileScreen;
 
   static String navbar = '/';

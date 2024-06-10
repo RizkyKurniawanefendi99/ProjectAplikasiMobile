@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:flutter_application_3/screens/Chat/ChatScreen.dart';
 
 class PayBRI extends StatefulWidget {
+  const PayBRI({super.key});
+
   @override
   _PayBRIState createState() => _PayBRIState();
 }
@@ -121,7 +123,7 @@ class PaymentTimer extends StatelessWidget {
   final String timeLeft;
   final DateTime deadline;
 
-  PaymentTimer({required this.timeLeft, required this.deadline});
+  const PaymentTimer({super.key, required this.timeLeft, required this.deadline});
 
   @override
   Widget build(BuildContext context) {
@@ -170,6 +172,8 @@ class PaymentTimer extends StatelessWidget {
 }
 
 class PaymentDetails extends StatelessWidget {
+  const PaymentDetails({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -234,11 +238,13 @@ class PaymentDetails extends StatelessWidget {
 }
 
 class PaymentInstructions extends StatelessWidget {
+  const PaymentInstructions({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView(
-        children: [
+        children: const [
           ExpansionTile(
             title: Text('Panduan Pembayaran'),
             children: [

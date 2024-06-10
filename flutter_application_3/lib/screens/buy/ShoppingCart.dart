@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/buy/BuyDrugScreen.dart';
 import 'package:flutter_application_3/screens/Payment/PayScreen.dart';
+import 'package:flutter_application_3/screens/buy/BuyDrugScreen.dart';
 
 class ShoppingCart extends StatefulWidget {
+  const ShoppingCart({super.key});
+
   @override
   _ShoppingCart createState() => _ShoppingCart();
 }
@@ -11,35 +13,35 @@ class _ShoppingCart extends State<ShoppingCart> {
   int quantity = 1;
   String alamat = 'Belum ada alamat'; // Variable to store the address
   bool isFreeShipping = false;
-  TextEditingController _voucherController = TextEditingController();
+  final TextEditingController _voucherController = TextEditingController();
   String selectedEkspedisi = 'JNE';
   String selectedPaymentMethod =
       'Bank'; // Variable to store selected payment method
 
   void _tambahAlamatDialog() {
-    TextEditingController _alamatController = TextEditingController();
+    TextEditingController alamatController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Tambah Alamat'),
+          title: const Text('Tambah Alamat'),
           content: TextField(
-            controller: _alamatController,
-            decoration: InputDecoration(hintText: "Masukkan alamat"),
+            controller: alamatController,
+            decoration: const InputDecoration(hintText: "Masukkan alamat"),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Batal'),
+              child: const Text('Batal'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Simpan'),
+              child: const Text('Simpan'),
               onPressed: () {
                 setState(() {
-                  alamat = _alamatController.text;
+                  alamat = alamatController.text;
                 });
                 Navigator.of(context).pop();
               },
@@ -67,9 +69,9 @@ class _ShoppingCart extends State<ShoppingCart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pilih Semua Barang'),
+        title: const Text('Pilih Semua Barang'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -78,33 +80,33 @@ class _ShoppingCart extends State<ShoppingCart> {
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: Text('Alamat Pengiriman'),
+            title: const Text('Alamat Pengiriman'),
             subtitle: Text(alamat),
             trailing: TextButton(
-              child: Text('Tambah Alamat'),
               onPressed: _tambahAlamatDialog,
+              child: const Text('Tambah Alamat'),
             ),
           ),
           ListTile(
-            title: Text('Kode Voucher'),
+            title: const Text('Kode Voucher'),
             subtitle: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _voucherController,
                     decoration:
-                        InputDecoration(hintText: "Masukkan kode voucher"),
+                        const InputDecoration(hintText: "Masukkan kode voucher"),
                   ),
                 ),
                 ElevatedButton(
-                  child: Text('Apply'),
                   onPressed: _applyVoucher,
+                  child: const Text('Apply'),
                 ),
               ],
             ),
           ),
           SwitchListTile(
-            title: Text('Gratis ongkos kirim telah ditambahkan'),
+            title: const Text('Gratis ongkos kirim telah ditambahkan'),
             value: isFreeShipping,
             onChanged: (bool value) {
               setState(() {
@@ -113,10 +115,10 @@ class _ShoppingCart extends State<ShoppingCart> {
             },
           ),
           ListTile(
-            title: Text('Pilih Ekspedisi'),
+            title: const Text('Pilih Ekspedisi'),
             subtitle: DropdownButton<String>(
               value: selectedEkspedisi,
-              items: <String>['JNE', 'TIKI', 'Pos Indonesia']
+              items: <String>['JNE', 'TIKI', 'Pos IDN']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -134,8 +136,8 @@ class _ShoppingCart extends State<ShoppingCart> {
             child: ListTile(
               leading: Image.network(
                   'https://lifepack.id/wp-content/uploads/2020/12/WhatsApp-Image-2021-08-09-at-10.35.24.jpeg'),
-              title: Text('Apotek K-24 Jend. Sudirman'),
-              subtitle: Column(
+              title: const Text('Apotek K-24 Jend. Sudirman'),
+              subtitle: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Paracetamol 500mg'), // Nama obat
@@ -146,7 +148,7 @@ class _ShoppingCart extends State<ShoppingCart> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.remove),
+                    icon: const Icon(Icons.remove),
                     onPressed: () {
                       setState(() {
                         if (quantity > 1) quantity--;
@@ -155,7 +157,7 @@ class _ShoppingCart extends State<ShoppingCart> {
                   ),
                   Text('$quantity'),
                   IconButton(
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                     onPressed: () {
                       setState(() {
                         quantity++;
@@ -169,35 +171,42 @@ class _ShoppingCart extends State<ShoppingCart> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
-              child: Text('+ Tambah Barang Lainnya'),
+              child: const Text('+ Tambah Barang Lainnya'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => BuyDrugScreen()),
+                  MaterialPageRoute(builder: (context) => const BuyDrugScreen()),
                 );
               },
             ),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Text('Total Bayar'),
+            title: const Text('Total Bayar'),
             trailing: Text('Rp${(37.800 * quantity).toStringAsFixed(2)}'),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: ElevatedButton(
-              child: Text('Beli'),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PaymentMethodScreen()),
+                    builder: (context) => PaymentBokingMethodScreen(
+                      doctorName: 'Apotek K-24 Jend. Sudirman',
+                      doctorSpecialty: 'Paracetamol 500mg',
+                      consultationFee: (37800 * quantity).toInt(),
+                      imagePath:
+                          'https://lifepack.id/wp-content/uploads/2020/12/WhatsApp-Image-2021-08-09-at-10.35.24.jpeg',
+                    ),
+                  ),
                 );
                 // Aksi ketika tombol beli ditekan
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
+              child: const Text('Beli'),
             ),
           ),
         ],

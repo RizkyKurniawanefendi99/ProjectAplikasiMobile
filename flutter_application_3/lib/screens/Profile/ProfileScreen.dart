@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('Profil'),
+        title: const Text('Profil'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -41,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(),
+            const Divider(),
             buildSectionTitle('Akun'),
             buildCard(context, 'Profil Saya', Icons.arrow_forward_ios),
             buildCard(context, 'Rekam Medis', Icons.arrow_forward_ios),
@@ -49,16 +51,16 @@ class ProfileScreen extends StatelessWidget {
             buildCard(context, 'Topik Saya', Icons.arrow_forward_ios),
             buildCard(context, 'Ubah Kata Sandi', Icons.arrow_forward_ios),
             buildCard(context, 'Ubah PIN Remedic', Icons.arrow_forward_ios),
-            Divider(),
+            const Divider(),
             buildSectionTitle('Aktivitas Saya'),
             buildCard(context, 'Transaksi Saya', Icons.arrow_forward_ios),
-            Divider(),
+            const Divider(),
             buildSectionTitle('Aplikasi Remedic'),
             buildCard(context, 'Tentang Kami', Icons.arrow_forward_ios),
             buildCard(context, 'Privasi', Icons.arrow_forward_ios),
             buildCard(context, 'Syarat & Ketentuan', Icons.arrow_forward_ios),
             buildCard(context, 'Hubungi Kami', Icons.arrow_forward_ios),
-            Divider(),
+            const Divider(),
             Card(
               margin:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -67,8 +69,8 @@ class ProfileScreen extends StatelessWidget {
               ),
               elevation: 3,
               child: ListTile(
-                title: Text('Keluar'),
-                trailing: Icon(Icons.logout),
+                title: const Text('Keluar'),
+                trailing: const Icon(Icons.logout),
                 onTap: () {
                   // Add logout functionality here
                 },

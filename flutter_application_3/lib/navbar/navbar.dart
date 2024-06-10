@@ -21,7 +21,7 @@ class _NavbarState extends State<Navbar> {
       return Scaffold(
         body: IndexedStack(
           index: controller.tabIndex,
-          children: [
+          children: const [
             DashboardScreen(),
             MessageScreen(),
             CalendarScreen(),

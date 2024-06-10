@@ -1,17 +1,28 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter_application_3/screens/calender/BookingSuccess.dart';
 
 class PayBNI extends StatefulWidget {
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  const PayBNI({super.key, 
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  });
+
   @override
   _PayBNIState createState() => _PayBNIState();
 }
 
 class _PayBNIState extends State<PayBNI> {
-  Duration duration = Duration(hours: 1);
+  Duration duration = const Duration(hours: 1);
   Timer? timer;
-  DateTime deadline = DateTime.now().add(Duration(hours: 1));
+  DateTime deadline = DateTime.now().add(const Duration(hours: 1));
 
   @override
   void initState() {
@@ -26,7 +37,7 @@ class _PayBNIState extends State<PayBNI> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
+    timer = Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
   }
 
   void setCountDown() {
@@ -59,21 +70,16 @@ class _PayBNIState extends State<PayBNI> {
   }
 
   void onPaymentCompleted() {
-    // Handle payment completed action
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Pembayaran Selesai'),
-        content: Text('Terima kasih, pembayaran Anda telah diterima.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // Navigate back or to another page if needed
-            },
-            child: Text('OK'),
-          ),
-        ],
+    // Navigate to BookingSuccess screen
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BookingSuccess(
+          doctorName: widget.doctorName,
+          doctorSpecialty: widget.doctorSpecialty,
+          consultationFee: widget.consultationFee,
+          imagePath: widget.imagePath,
+        ),
       ),
     );
   }
@@ -82,7 +88,7 @@ class _PayBNIState extends State<PayBNI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Selesaikan Pembayaran'),
+        title: const Text('Selesaikan Pembayaran'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -91,14 +97,14 @@ class _PayBNIState extends State<PayBNI> {
           children: [
             PaymentTimer(
                 timeLeft: formatDuration(duration), deadline: deadline),
-            SizedBox(height: 16),
-            PaymentDetails(),
-            SizedBox(height: 16),
-            PaymentInstructions(),
+            const SizedBox(height: 16),
+            PaymentDetails(consultationFee: widget.consultationFee),
+            const SizedBox(height: 16),
+            const PaymentInstructions(),
             Center(
               child: ElevatedButton(
                 onPressed: onPaymentCompleted,
-                child: Text(
+                child: const Text(
                   'Selesai Dibayar',
                 ),
               ),
@@ -114,7 +120,7 @@ class PaymentTimer extends StatelessWidget {
   final String timeLeft;
   final DateTime deadline;
 
-  PaymentTimer({required this.timeLeft, required this.deadline});
+  const PaymentTimer({super.key, required this.timeLeft, required this.deadline});
 
   @override
   Widget build(BuildContext context) {
@@ -128,21 +134,21 @@ class PaymentTimer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Segera lakukan pembayaran dalam waktu',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Center(
               child: Text(
                 timeLeft,
-                style: TextStyle(fontSize: 24, color: Colors.blue),
+                style: const TextStyle(fontSize: 24, color: Colors.blue),
               ),
             ),
             Center(
               child: Text(
                 'Sebelum ${formatDateTime(deadline)}',
-                style: TextStyle(color: Colors.grey),
+                style: const TextStyle(color: Colors.grey),
               ),
             ),
           ],
@@ -163,6 +169,10 @@ class PaymentTimer extends StatelessWidget {
 }
 
 class PaymentDetails extends StatelessWidget {
+  final int consultationFee;
+
+  const PaymentDetails({super.key, required this.consultationFee});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -175,21 +185,21 @@ class PaymentDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Transfer ke nomor Virtual Account',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Image.asset('assets/images/bni.png',
                     width: 40, height: 40), // Update with BNI logo
-                SizedBox(width: 8),
-                Text('BNI', style: TextStyle(fontSize: 16)),
+                const SizedBox(width: 8),
+                const Text('BNI', style: TextStyle(fontSize: 16)),
               ],
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               '39338-351541', // Example VA number
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
@@ -197,17 +207,17 @@ class PaymentDetails extends StatelessWidget {
               onPressed: () {
                 // Handle copy virtual account number
               },
-              child: Text('Salin Nomor Virtual Account'),
+              child: const Text('Salin Nomor Virtual Account'),
             ),
-            Divider(),
-            Text(
+            const Divider(),
+            const Text(
               'Jumlah yang harus dibayar',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              'Rp47.803', // Example amount
-              style: TextStyle(
+              'Rp${consultationFee.toString()}', // Example amount
+              style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.orange),
@@ -216,7 +226,7 @@ class PaymentDetails extends StatelessWidget {
               onPressed: () {
                 // Handle copy amount
               },
-              child: Text('Salin Jumlah'),
+              child: const Text('Salin Jumlah'),
             ),
           ],
         ),
@@ -225,22 +235,14 @@ class PaymentDetails extends StatelessWidget {
   }
 }
 
-String formatDateTime(DateTime dateTime) {
-  String twoDigits(int n) => n.toString().padLeft(2, '0');
-  final day = twoDigits(dateTime.day);
-  final month = twoDigits(dateTime.month);
-  final year = dateTime.year;
-  final hour = twoDigits(dateTime.hour);
-  final minute = twoDigits(dateTime.minute);
-  return '$day-$month-$year $hour:$minute';
-}
-
 class PaymentInstructions extends StatelessWidget {
+  const PaymentInstructions({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView(
-        children: [
+        children: const [
           ExpansionTile(
             title: Text('Panduan Pembayaran'),
             children: [
