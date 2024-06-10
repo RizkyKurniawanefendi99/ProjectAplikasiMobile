@@ -24,7 +24,7 @@ class HealthMonitoringMain extends StatelessWidget {
       'value': '6457',
       'status': 'Kerja Bagus',
       'icon': Icons.directions_walk,
-      'color': Colors.blue
+      'color': Color.fromARGB(255, 33, 150, 243)
     },
     'Suhu': {
       'value': '36.6 C',

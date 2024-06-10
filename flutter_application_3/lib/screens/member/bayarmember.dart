@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/member/pembayaransukses.dart';
 
 
 class PaymentPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _PaymentPageState extends State<PaymentPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            // Implement back button functionality
+           Navigator.pop(context); // Implement back button functionality
           },
         ),
         backgroundColor: Colors.white,
@@ -182,7 +183,12 @@ class _PaymentPageState extends State<PaymentPage> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  // Implement next button functionality
+                 Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PaymentSuccessScreen(),
+                                ), 
+                                );// Implement next button functionality
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,

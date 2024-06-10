@@ -1,34 +1,18 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: PaymentSuccessScreen(),
-    );
-  }
-}
+import 'package:flutter_application_3/navbar/navbar.dart';
 
 class PaymentSuccessScreen extends StatelessWidget {
-  const PaymentSuccessScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Handle back button press
+             Navigator.pop(context);// Handle back button press
           },
         ),
-        title: const Text("Pembayaran Sukses"),
+        title: Text("Pembayaran Sukses"),
         centerTitle: true,
       ),
       body: Padding(
@@ -36,23 +20,23 @@ class PaymentSuccessScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16),
+            Text(
               "REPROTEKSI",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8),
-            const Text(
+            SizedBox(height: 8),
+            Text(
               "Unlimited free chat ke dokter spesialis 24 jam, dokter pribadi dan gratis ongkir dan obat",
               style: TextStyle(
                 fontSize: 16,
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16),
+            Text(
               "Rp 35.000/bulan",
               style: TextStyle(
                 fontSize: 24,
@@ -60,17 +44,17 @@ class PaymentSuccessScreen extends StatelessWidget {
                 color: Colors.orange,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                primary: Colors.orange,
+                padding: EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
                   "Paket Telah Aktif",
                   style: TextStyle(
@@ -80,14 +64,14 @@ class PaymentSuccessScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -116,17 +100,24 @@ class PaymentSuccessScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Spacer(),
+            Spacer(),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                     MaterialPageRoute(
+                     builder: (context) => Navbar(),
+                   ),
+                );
+              },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                primary: Colors.orange,
+                padding: EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
                   "Ok",
                   style: TextStyle(
@@ -148,7 +139,7 @@ class PaymentDetailRow extends StatelessWidget {
   final String value;
   final Color valueColor;
 
-  const PaymentDetailRow({super.key, 
+  PaymentDetailRow({
     required this.title,
     required this.value,
     this.valueColor = Colors.black,
@@ -161,7 +152,7 @@ class PaymentDetailRow extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
           ),
         ),

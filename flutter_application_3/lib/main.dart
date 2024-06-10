@@ -3,6 +3,7 @@ import 'package:flutter_application_3/screens/welcome_screen.dart';
 import 'package:flutter_application_3/theme/theme.dart';
 
 void main() {
+  
   runApp(const MyApp());
 }
 
