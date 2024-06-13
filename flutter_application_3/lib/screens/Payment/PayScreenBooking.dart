@@ -14,12 +14,13 @@ class PaymentBokingMethodScreen extends StatelessWidget {
   final int consultationFee;
   final String imagePath;
 
-  const PaymentBokingMethodScreen({super.key, 
+  const PaymentBokingMethodScreen({
+    Key? key,
     required this.doctorName,
     required this.doctorSpecialty,
     required this.consultationFee,
     required this.imagePath,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +61,13 @@ class DoctorSummary extends StatelessWidget {
   final int consultationFee;
   final String imagePath;
 
-  const DoctorSummary({super.key, 
+  const DoctorSummary({
+    Key? key,
     required this.doctorName,
     required this.doctorSpecialty,
     required this.consultationFee,
     required this.imagePath,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -115,11 +117,12 @@ class SummaryItem extends StatelessWidget {
   final String amount;
   final bool isTotal;
 
-  const SummaryItem({super.key, 
+  const SummaryItem({
+    Key? key,
     required this.title,
     required this.amount,
     this.isTotal = false,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -145,12 +148,13 @@ class PaymentMethods extends StatelessWidget {
   final int consultationFee;
   final String imagePath;
 
-  const PaymentMethods({super.key, 
+  const PaymentMethods({
+    Key? key,
     required this.doctorName,
     required this.doctorSpecialty,
     required this.consultationFee,
     required this.imagePath,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +167,14 @@ class PaymentMethods extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const PayGoPay()),
+                  MaterialPageRoute(
+                    builder: (context) => PayGoPay(
+                      doctorName: doctorName,
+                      doctorSpecialty: doctorSpecialty,
+                      consultationFee: consultationFee,
+                      imagePath: imagePath,
+                    ),
+                  ),
                 );
               }),
           PaymentMethod(
@@ -172,7 +183,14 @@ class PaymentMethods extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const PayOvo()),
+                  MaterialPageRoute(
+                    builder: (context) => PayOvo(
+                      doctorName: doctorName,
+                      doctorSpecialty: doctorSpecialty,
+                      consultationFee: consultationFee,
+                      imagePath: imagePath,
+                    ),
+                  ),
                 );
               }),
           PaymentMethod(
@@ -181,7 +199,14 @@ class PaymentMethods extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const PayShopee()),
+                  MaterialPageRoute(
+                    builder: (context) => PayShopee(
+                      doctorName: doctorName,
+                      doctorSpecialty: doctorSpecialty,
+                      consultationFee: consultationFee,
+                      imagePath: imagePath,
+                    ),
+                  ),
                 );
               }),
         ]),
@@ -194,7 +219,14 @@ class PaymentMethods extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PayPermata()),
+                      MaterialPageRoute(
+                        builder: (context) => PayPermata(
+                          doctorName: doctorName,
+                          doctorSpecialty: doctorSpecialty,
+                          consultationFee: consultationFee,
+                          imagePath: imagePath,
+                        ),
+                      ),
                     );
                   }),
               PaymentMethod(
@@ -203,7 +235,15 @@ class PaymentMethods extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PayBCA()),
+                      MaterialPageRoute(
+                        builder: (context) => PayBCA(
+                          doctorName: doctorName,
+                          doctorSpecialty: doctorSpecialty,
+                          consultationFee: consultationFee,
+                          imagePath: imagePath,
+                          choice: '',
+                        ),
+                      ),
                     );
                   }),
               PaymentMethod(
@@ -212,7 +252,15 @@ class PaymentMethods extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PayMandiri()),
+                      MaterialPageRoute(
+                        builder: (context) => PayMandiri(
+                          doctorName: doctorName,
+                          doctorSpecialty: doctorSpecialty,
+                          consultationFee: consultationFee,
+                          imagePath: imagePath,
+                          choice: '',
+                        ),
+                      ),
                     );
                   }),
               PaymentMethod(
@@ -226,7 +274,7 @@ class PaymentMethods extends StatelessWidget {
                           doctorName: doctorName,
                           doctorSpecialty: doctorSpecialty,
                           consultationFee: consultationFee,
-                          imagePath: imagePath,
+                          imagePath: imagePath, choice: '',
                         ),
                       ),
                     );
@@ -237,7 +285,14 @@ class PaymentMethods extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PayBRI()),
+                      MaterialPageRoute(
+                        builder: (context) => PayBRI(
+                          doctorName: doctorName,
+                          doctorSpecialty: doctorSpecialty,
+                          consultationFee: consultationFee,
+                          imagePath: imagePath,
+                        ),
+                      ),
                     );
                   }),
             ]),
@@ -250,7 +305,9 @@ class PaymentMethodSection extends StatelessWidget {
   final String title;
   final List<PaymentMethod> methods;
 
-  const PaymentMethodSection({super.key, required this.title, required this.methods});
+  const PaymentMethodSection(
+      {Key? key, required this.title, required this.methods})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -275,12 +332,13 @@ class PaymentMethod extends StatelessWidget {
   final bool hasIcon;
   final VoidCallback? onTap;
 
-  const PaymentMethod({super.key, 
-    required this.name,
-    required this.logo,
-    this.hasIcon = false,
-    this.onTap,
-  });
+  const PaymentMethod(
+      {Key? key,
+      required this.name,
+      required this.logo,
+      this.hasIcon = false,
+      this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

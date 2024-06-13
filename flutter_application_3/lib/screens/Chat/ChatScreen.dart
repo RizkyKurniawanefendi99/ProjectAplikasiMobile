@@ -1,10 +1,21 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/navbar/navbar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_application_3/navbar/navbar.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  const ChatScreen({
+    super.key,
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  });
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -30,7 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
         _messages.add({
           'type': 'text',
           'content':
-              'Terima kasih untuk pesan Anda. Saya akan segera menghubungi Anda kembali.',
+              'Terima kasih untuk pesan Anda. Saya akan segera menghubungi Anda kembali.',
           'sender': 'doctor'
         });
       });
@@ -59,19 +70,19 @@ class _ChatScreenState extends State<ChatScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Row(
+        title: Row(
           children: [
             CircleAvatar(
               backgroundImage: AssetImage(
-                  'assets/doctor.jpg'), // Add your doctor's image asset here
+                  widget.imagePath), // Add your doctor's image asset here
             ),
             SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('dr. Tiara Van Nguyeen'),
+                Text(widget.doctorName),
                 Text(
-                  'Dokter Umum',
+                  widget.doctorSpecialty,
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.white70,
@@ -148,7 +159,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 16.0),
                     ),
                   ),
                 ),

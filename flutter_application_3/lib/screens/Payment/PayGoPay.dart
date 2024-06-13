@@ -1,10 +1,20 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/Payment/PaymentSuccess.dart';
 import 'dart:async';
 
 class PayGoPay extends StatefulWidget {
-  const PayGoPay({super.key});
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  const PayGoPay({
+    Key? key,
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   _PayGoPayState createState() => _PayGoPayState();
@@ -61,21 +71,16 @@ class _PayGoPayState extends State<PayGoPay> {
   }
 
   void onPaymentCompleted() {
-    // Handle payment completed action
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Pembayaran Selesai'),
-        content: Text('Terima kasih, pembayaran Anda telah diterima.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // Navigate back or to another page if needed
-            },
-            child: Text('OK'),
-          ),
-        ],
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaySuccess(
+          referenceNumber: '000085752257',
+          dateTime: DateTime.now(),
+          paymentMethod: 'GoPay Virtual Account',
+          amount: widget.consultationFee.toDouble(),
+          senderName: 'Rizky Kurniawan Efendi', productName: '', choice: '',
+        ),
       ),
     );
   }
@@ -96,10 +101,14 @@ class _PayGoPayState extends State<PayGoPay> {
               deadline: deadline,
             ),
             SizedBox(height: 16),
-            PaymentDetails(),
+            PaymentDetails(
+              doctorName: widget.doctorName,
+              doctorSpecialty: widget.doctorSpecialty,
+              consultationFee: widget.consultationFee,
+              imagePath: widget.imagePath,
+            ),
             SizedBox(height: 16),
             Expanded(child: PaymentInstructions()),
-            SizedBox(height: 16),
             Center(
               child: ElevatedButton(
                 onPressed: onPaymentCompleted,
@@ -119,7 +128,8 @@ class PaymentTimer extends StatelessWidget {
   final String timeLeft;
   final DateTime deadline;
 
-  const PaymentTimer({super.key, required this.timeLeft, required this.deadline});
+  const PaymentTimer({Key? key, required this.timeLeft, required this.deadline})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +178,18 @@ class PaymentTimer extends StatelessWidget {
 }
 
 class PaymentDetails extends StatelessWidget {
-  const PaymentDetails({super.key});
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  const PaymentDetails({
+    Key? key,
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -189,16 +210,14 @@ class PaymentDetails extends StatelessWidget {
             SizedBox(height: 8),
             Row(
               children: [
-                Image.asset('assets/gopay.png', // Update with GoPay logo
-                    width: 40,
-                    height: 40),
+                Image.asset('assets/gopay.png', width: 40, height: 40),
                 SizedBox(width: 8),
                 Text('GoPay', style: TextStyle(fontSize: 16)),
               ],
             ),
             SizedBox(height: 8),
             Text(
-              '12345-67890', // Example VA number
+              '12345-67890',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextButton(
@@ -214,7 +233,7 @@ class PaymentDetails extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Rp200.000', // Example amount
+              'Rp${consultationFee.toString()}',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -226,6 +245,29 @@ class PaymentDetails extends StatelessWidget {
               },
               child: Text('Salin Jumlah'),
             ),
+            Divider(),
+            Text(
+              'Detail Dokter',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(imagePath),
+                  radius: 30,
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(doctorName,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(doctorSpecialty),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -234,7 +276,7 @@ class PaymentDetails extends StatelessWidget {
 }
 
 class PaymentInstructions extends StatelessWidget {
-  const PaymentInstructions({super.key});
+  const PaymentInstructions({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

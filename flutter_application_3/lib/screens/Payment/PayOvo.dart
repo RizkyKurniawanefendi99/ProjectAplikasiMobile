@@ -1,10 +1,22 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/Payment/PaymentSuccess.dart';
 import 'dart:async';
 
 class PayOvo extends StatefulWidget {
-  const PayOvo({super.key});
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  const PayOvo({
+    Key? key,
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   _PayOvoState createState() => _PayOvoState();
@@ -61,21 +73,18 @@ class _PayOvoState extends State<PayOvo> {
   }
 
   void onPaymentCompleted() {
-    // Handle payment completed action
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Pembayaran Selesai'),
-        content: Text('Terima kasih, pembayaran Anda telah diterima.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // Navigate back or to another page if needed
-            },
-            child: Text('OK'),
-          ),
-        ],
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaySuccess(
+          referenceNumber: '000085752257',
+          dateTime: DateTime.now(),
+          paymentMethod: 'Ovo Virtual Account',
+          amount: widget.consultationFee.toDouble(),
+          senderName: 'Rizky Kurniawan Efendi',
+          productName: '',
+          choice: '',
+        ),
       ),
     );
   }
@@ -96,14 +105,20 @@ class _PayOvoState extends State<PayOvo> {
               deadline: deadline,
             ),
             SizedBox(height: 16),
-            PaymentDetails(),
+            PaymentDetails(
+              doctorName: widget.doctorName,
+              doctorSpecialty: widget.doctorSpecialty,
+              consultationFee: widget.consultationFee,
+              imagePath: widget.imagePath,
+            ),
             SizedBox(height: 16),
             Expanded(child: PaymentInstructions()),
-            SizedBox(height: 16),
             Center(
               child: ElevatedButton(
                 onPressed: onPaymentCompleted,
-                child: Text('Selesai Dibayar'),
+                child: Text(
+                  'Selesai Dibayar',
+                ),
               ),
             ),
           ],
@@ -117,7 +132,8 @@ class PaymentTimer extends StatelessWidget {
   final String timeLeft;
   final DateTime deadline;
 
-  const PaymentTimer({super.key, required this.timeLeft, required this.deadline});
+  const PaymentTimer({Key? key, required this.timeLeft, required this.deadline})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +182,18 @@ class PaymentTimer extends StatelessWidget {
 }
 
 class PaymentDetails extends StatelessWidget {
-  const PaymentDetails({super.key});
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  const PaymentDetails({
+    Key? key,
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -187,11 +214,13 @@ class PaymentDetails extends StatelessWidget {
             SizedBox(height: 8),
             Row(
               children: [
-                Image.asset('assets/ovo.png', // Update with OVO logo
-                    width: 40,
-                    height: 40),
+                Image.asset(
+                  'assets/images/ovo.png', // Update with Ovo logo
+                  width: 40,
+                  height: 40,
+                ),
                 SizedBox(width: 8),
-                Text('OVO', style: TextStyle(fontSize: 16)),
+                Text('Ovo', style: TextStyle(fontSize: 16)),
               ],
             ),
             SizedBox(height: 8),
@@ -212,7 +241,7 @@ class PaymentDetails extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Rp200.000', // Example amount
+              'Rp${consultationFee.toString()}', // Example amount
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -224,6 +253,28 @@ class PaymentDetails extends StatelessWidget {
               },
               child: Text('Salin Jumlah'),
             ),
+            Divider(),
+            Text(
+              'Detail Dokter',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(imagePath),
+                  radius: 30,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(doctorName,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(doctorSpecialty),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -232,7 +283,7 @@ class PaymentDetails extends StatelessWidget {
 }
 
 class PaymentInstructions extends StatelessWidget {
-  const PaymentInstructions({super.key});
+  const PaymentInstructions({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -244,9 +295,9 @@ class PaymentInstructions extends StatelessWidget {
             ListTile(
               title: Text('Internet Banking'),
               subtitle: Text(
-                '1. Buka halaman internet banking OVO (https://ovo.id)\n'
+                '1. Buka halaman internet banking Ovo (https://ovo.co.id)\n'
                 '2. Lakukan login dan masukkan user ID dan password Anda\n'
-                '3. Pilih “Transfer” > Pilih “Transfer ke OVO Virtual Account”\n'
+                '3. Pilih “Transfer” > Pilih “Transfer ke Ovo Virtual Account”\n'
                 '4. Masukkan nomor virtual account\n'
                 '5. Pastikan detail pembayaran seperti Nomor Virtual Account, Nama Perusahaan, Nama Pembeli, dan Total Bayar sudah sesuai\n'
                 '6. Masukkan password dan m-Token\n'
@@ -256,30 +307,30 @@ class PaymentInstructions extends StatelessWidget {
           ],
         ),
         ExpansionTile(
-          title: Text('Mobile Banking OVO'),
+          title: Text('Mobile Banking Ovo'),
           children: [
             ListTile(
-              title: Text('Panduan Mobile Banking OVO'),
+              title: Text('Panduan Mobile Banking Ovo'),
               subtitle: Text(
-                '1. Buka aplikasi Mobile OVO\n'
+                '1. Buka aplikasi Mobile Ovo\n'
                 '2. Lakukan login dengan user ID dan PIN\n'
-                '3. Pilih “m-Transfer” > “Transfer ke OVO Virtual Account”\n'
+                '3. Pilih “m-Transfer” > “Transfer ke Ovo Virtual Account”\n'
                 '4. Masukkan nomor virtual account\n'
                 '5. Periksa kembali detail pembayaran\n'
-                '6. Masukkan PIN OVO\n'
+                '6. Masukkan PIN Ovo\n'
                 '7. Pembayaran selesai dan simpan bukti pembayaran',
               ),
             ),
           ],
         ),
         ExpansionTile(
-          title: Text('ATM OVO'),
+          title: Text('ATM Ovo'),
           children: [
             ListTile(
-              title: Text('Panduan ATM OVO'),
+              title: Text('Panduan ATM Ovo'),
               subtitle: Text(
                 '1. Masukkan kartu ATM dan PIN Anda\n'
-                '2. Pilih “Transaksi Lain” > “Transfer” > “Ke Rek. OVO Virtual Account”\n'
+                '2. Pilih “Transaksi Lain” > “Transfer” > “Ke Rek. Ovo Virtual Account”\n'
                 '3. Masukkan nomor virtual account\n'
                 '4. Periksa kembali detail pembayaran\n'
                 '5. Ikuti instruksi untuk menyelesaikan pembayaran\n'

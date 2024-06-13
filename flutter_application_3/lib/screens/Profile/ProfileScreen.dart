@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/Artikel/NewsPage.dart';
+import 'package:flutter_application_3/screens/HealthMonotoring/helthmonitoringmain.dart';
+import 'package:flutter_application_3/screens/Profile/hubungikami.dart';
+import 'package:flutter_application_3/screens/Profile/privasi.dart';
+import 'package:flutter_application_3/screens/Profile/profilsaya.dart';
+import 'package:flutter_application_3/screens/Profile/syaratdanketentuan.dart';
+import 'package:flutter_application_3/screens/Profile/tentangkami.dart';
+import 'package:flutter_application_3/screens/recordmedic/RecordMedicDashboard.dart';
+import 'package:flutter_application_3/screens/signin_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -45,21 +54,27 @@ class ProfileScreen extends StatelessWidget {
             ),
             const Divider(),
             buildSectionTitle('Akun'),
-            buildCard(context, 'Profil Saya', Icons.arrow_forward_ios),
-            buildCard(context, 'Rekam Medis', Icons.arrow_forward_ios),
-            buildCard(context, 'Keluarga Saya', Icons.arrow_forward_ios),
-            buildCard(context, 'Topik Saya', Icons.arrow_forward_ios),
-            buildCard(context, 'Ubah Kata Sandi', Icons.arrow_forward_ios),
-            buildCard(context, 'Ubah PIN Remedic', Icons.arrow_forward_ios),
+            buildCardWithNavigation(
+                context, 'Profil Saya', Icons.arrow_forward_ios, ProfilePage()),
+            buildCardWithNavigation(context, 'Rekam Medis',
+                Icons.arrow_forward_ios, RecordMedicDashboard()),
+            buildCardWithNavigation(context, 'Health Monitoring',
+                Icons.arrow_forward_ios, HealthMonitoringMain()),
+            buildCardWithNavigation(
+                context, 'Topik Saya', Icons.arrow_forward_ios, NewsPage()),
             const Divider(),
             buildSectionTitle('Aktivitas Saya'),
             buildCard(context, 'Transaksi Saya', Icons.arrow_forward_ios),
             const Divider(),
             buildSectionTitle('Aplikasi Remedic'),
-            buildCard(context, 'Tentang Kami', Icons.arrow_forward_ios),
-            buildCard(context, 'Privasi', Icons.arrow_forward_ios),
-            buildCard(context, 'Syarat & Ketentuan', Icons.arrow_forward_ios),
-            buildCard(context, 'Hubungi Kami', Icons.arrow_forward_ios),
+            buildCardWithNavigation(context, 'Tentang Kami',
+                Icons.arrow_forward_ios, TentangKami()),
+            buildCardWithNavigation(
+                context, 'Privasi', Icons.arrow_forward_ios, Privasi()),
+            buildCardWithNavigation(context, 'Syarat & Ketentuan',
+                Icons.arrow_forward_ios, SyaratDanKetentuan()),
+            buildCardWithNavigation(context, 'Hubungi Kami',
+                Icons.arrow_forward_ios, HubungiKami()),
             const Divider(),
             Card(
               margin:
@@ -72,7 +87,12 @@ class ProfileScreen extends StatelessWidget {
                 title: const Text('Keluar'),
                 trailing: const Icon(Icons.logout),
                 onTap: () {
-                  // Add logout functionality here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignInScreen(),
+                    ),
+                  ); // Add logout functionality here
                 },
               ),
             ),
@@ -111,6 +131,27 @@ class ProfileScreen extends StatelessWidget {
         trailing: Icon(trailingIcon),
         onTap: () {
           // Add navigation functionality here
+        },
+      ),
+    );
+  }
+
+  Widget buildCardWithNavigation(BuildContext context, String title,
+      IconData trailingIcon, Widget destination) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      elevation: 3,
+      child: ListTile(
+        title: Text(title),
+        trailing: Icon(trailingIcon),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => destination),
+          );
         },
       ),
     );

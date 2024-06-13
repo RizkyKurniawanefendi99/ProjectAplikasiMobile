@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/Payment/PaymentSuccess.dart';
 import 'dart:async';
-import 'package:flutter_application_3/screens/calender/BookingSuccess.dart';
 
 class PayBNI extends StatefulWidget {
   final String doctorName;
   final String doctorSpecialty;
   final int consultationFee;
   final String imagePath;
+  final String choice;
 
-  const PayBNI({super.key, 
+  const PayBNI({
+    Key? key,
     required this.doctorName,
     required this.doctorSpecialty,
     required this.consultationFee,
     required this.imagePath,
-  });
+    required this.choice,
+  }) : super(key: key);
 
   @override
   _PayBNIState createState() => _PayBNIState();
 }
 
 class _PayBNIState extends State<PayBNI> {
-  Duration duration = const Duration(hours: 1);
+  Duration duration = Duration(hours: 1);
   Timer? timer;
-  DateTime deadline = DateTime.now().add(const Duration(hours: 1));
+  DateTime deadline = DateTime.now().add(Duration(hours: 1));
 
   @override
   void initState() {
@@ -37,7 +40,7 @@ class _PayBNIState extends State<PayBNI> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+    timer = Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
   }
 
   void setCountDown() {
@@ -70,15 +73,17 @@ class _PayBNIState extends State<PayBNI> {
   }
 
   void onPaymentCompleted() {
-    // Navigate to BookingSuccess screen
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BookingSuccess(
-          doctorName: widget.doctorName,
-          doctorSpecialty: widget.doctorSpecialty,
-          consultationFee: widget.consultationFee,
-          imagePath: widget.imagePath,
+        builder: (context) => PaySuccess(
+          referenceNumber: '000085752257',
+          dateTime: DateTime.now(),
+          paymentMethod: 'BNI Virtual Account',
+          amount: widget.consultationFee.toDouble(),
+          senderName: 'Rizky Kurniawan Efendi',
+          productName: '',
+          choice: 'widget.choice,',
         ),
       ),
     );
@@ -88,7 +93,7 @@ class _PayBNIState extends State<PayBNI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Selesaikan Pembayaran'),
+        title: Text('Selesaikan Pembayaran'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -96,15 +101,22 @@ class _PayBNIState extends State<PayBNI> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PaymentTimer(
-                timeLeft: formatDuration(duration), deadline: deadline),
-            const SizedBox(height: 16),
-            PaymentDetails(consultationFee: widget.consultationFee),
-            const SizedBox(height: 16),
-            const PaymentInstructions(),
+              timeLeft: formatDuration(duration),
+              deadline: deadline,
+            ),
+            SizedBox(height: 16),
+            PaymentDetails(
+              doctorName: widget.doctorName,
+              doctorSpecialty: widget.doctorSpecialty,
+              consultationFee: widget.consultationFee,
+              imagePath: widget.imagePath,
+            ),
+            SizedBox(height: 16),
+            Expanded(child: PaymentInstructions()),
             Center(
               child: ElevatedButton(
                 onPressed: onPaymentCompleted,
-                child: const Text(
+                child: Text(
                   'Selesai Dibayar',
                 ),
               ),
@@ -120,7 +132,8 @@ class PaymentTimer extends StatelessWidget {
   final String timeLeft;
   final DateTime deadline;
 
-  const PaymentTimer({super.key, required this.timeLeft, required this.deadline});
+  const PaymentTimer({Key? key, required this.timeLeft, required this.deadline})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -134,21 +147,21 @@ class PaymentTimer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Segera lakukan pembayaran dalam waktu',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Center(
               child: Text(
                 timeLeft,
-                style: const TextStyle(fontSize: 24, color: Colors.blue),
+                style: TextStyle(fontSize: 24, color: Colors.blue),
               ),
             ),
             Center(
               child: Text(
                 'Sebelum ${formatDateTime(deadline)}',
-                style: const TextStyle(color: Colors.grey),
+                style: TextStyle(color: Colors.grey),
               ),
             ),
           ],
@@ -169,9 +182,18 @@ class PaymentTimer extends StatelessWidget {
 }
 
 class PaymentDetails extends StatelessWidget {
+  final String doctorName;
+  final String doctorSpecialty;
   final int consultationFee;
+  final String imagePath;
 
-  const PaymentDetails({super.key, required this.consultationFee});
+  const PaymentDetails({
+    Key? key,
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -185,21 +207,24 @@ class PaymentDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Transfer ke nomor Virtual Account',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Row(
               children: [
-                Image.asset('assets/images/bni.png',
-                    width: 40, height: 40), // Update with BNI logo
-                const SizedBox(width: 8),
-                const Text('BNI', style: TextStyle(fontSize: 16)),
+                Image.asset(
+                  'assets/images/bni.png', // Update with BNI logo
+                  width: 40,
+                  height: 40,
+                ),
+                SizedBox(width: 8),
+                Text('BNI', style: TextStyle(fontSize: 16)),
               ],
             ),
-            const SizedBox(height: 8),
-            const Text(
+            SizedBox(height: 8),
+            Text(
               '39338-351541', // Example VA number
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
@@ -207,17 +232,17 @@ class PaymentDetails extends StatelessWidget {
               onPressed: () {
                 // Handle copy virtual account number
               },
-              child: const Text('Salin Nomor Virtual Account'),
+              child: Text('Salin Nomor Virtual Account'),
             ),
-            const Divider(),
-            const Text(
+            Divider(),
+            Text(
               'Jumlah yang harus dibayar',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               'Rp${consultationFee.toString()}', // Example amount
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.orange),
@@ -226,7 +251,30 @@ class PaymentDetails extends StatelessWidget {
               onPressed: () {
                 // Handle copy amount
               },
-              child: const Text('Salin Jumlah'),
+              child: Text('Salin Jumlah'),
+            ),
+            Divider(),
+            Text(
+              'Detail Dokter',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(imagePath),
+                  radius: 30,
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(doctorName,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(doctorSpecialty),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -236,65 +284,63 @@ class PaymentDetails extends StatelessWidget {
 }
 
 class PaymentInstructions extends StatelessWidget {
-  const PaymentInstructions({super.key});
+  const PaymentInstructions({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView(
-        children: const [
-          ExpansionTile(
-            title: Text('Panduan Pembayaran'),
-            children: [
-              ListTile(
-                title: Text('Internet Banking'),
-                subtitle: Text(
-                  '1. Buka halaman internet banking BNI (https://bni.co.id)\n'
-                  '2. Lakukan login dan masukkan user ID dan password Anda\n'
-                  '3. Pilih “Transfer Dana” > Pilih “Transfer ke BNI Virtual Account”\n'
-                  '4. Masukkan nomor virtual account\n'
-                  '5. Pastikan detail pembayaran seperti Nomor Virtual Account, Nama Perusahaan, Nama Pembeli, dan Total Bayar sudah sesuai\n'
-                  '6. Masukkan password dan m-Token\n'
-                  '7. Pembayaran selesai. Simpan notifikasi sebagai bukti bayar',
-                ),
+    return ListView(
+      children: const [
+        ExpansionTile(
+          title: Text('Panduan Pembayaran'),
+          children: [
+            ListTile(
+              title: Text('Internet Banking'),
+              subtitle: Text(
+                '1. Buka halaman internet banking BNI (https://bni.co.id)\n'
+                '2. Lakukan login dan masukkan user ID dan password Anda\n'
+                '3. Pilih “Transfer” > “BNI Virtual Account”\n'
+                '4. Masukkan nomor virtual account\n'
+                '5. Pastikan detail pembayaran seperti Nomor Virtual Account, Nama Perusahaan, Nama Pembeli, dan Total Bayar sudah sesuai\n'
+                '6. Masukkan password dan m-Token\n'
+                '7. Pembayaran selesai. Simpan notifikasi sebagai bukti bayar',
               ),
-            ],
-          ),
-          ExpansionTile(
-            title: Text('Mobile BNI'),
-            children: [
-              ListTile(
-                title: Text('Panduan Mobile BNI'),
-                subtitle: Text(
-                  '1. Buka aplikasi Mobile BNI\n'
-                  '2. Lakukan login dengan user ID dan PIN\n'
-                  '3. Pilih “m-Transfer” > “Transfer ke BNI Virtual Account”\n'
-                  '4. Masukkan nomor virtual account\n'
-                  '5. Periksa kembali detail pembayaran\n'
-                  '6. Masukkan PIN BNI\n'
-                  '7. Pembayaran selesai dan simpan bukti pembayaran',
-                ),
+            ),
+          ],
+        ),
+        ExpansionTile(
+          title: Text('Mobile Banking BNI'),
+          children: [
+            ListTile(
+              title: Text('Panduan Mobile Banking BNI'),
+              subtitle: Text(
+                '1. Buka aplikasi Mobile BNI\n'
+                '2. Lakukan login dengan user ID dan PIN\n'
+                '3. Pilih “m-Transfer” > “BNI Virtual Account”\n'
+                '4. Masukkan nomor virtual account\n'
+                '5. Periksa kembali detail pembayaran\n'
+                '6. Masukkan PIN BNI\n'
+                '7. Pembayaran selesai dan simpan bukti pembayaran',
               ),
-            ],
-          ),
-          ExpansionTile(
-            title: Text('ATM BNI'),
-            children: [
-              ListTile(
-                title: Text('Panduan ATM BNI'),
-                subtitle: Text(
-                  '1. Masukkan kartu ATM dan PIN Anda\n'
-                  '2. Pilih “Transaksi Lainnya” > “Transfer” > “Ke Rek. BNI Virtual Account”\n'
-                  '3. Masukkan nomor virtual account\n'
-                  '4. Periksa kembali detail pembayaran\n'
-                  '5. Ikuti instruksi untuk menyelesaikan pembayaran\n'
-                  '6. Simpan struk sebagai bukti pembayaran',
-                ),
+            ),
+          ],
+        ),
+        ExpansionTile(
+          title: Text('ATM BNI'),
+          children: [
+            ListTile(
+              title: Text('Panduan ATM BNI'),
+              subtitle: Text(
+                '1. Masukkan kartu ATM dan PIN Anda\n'
+                '2. Pilih “Transaksi Lain” > “Pembayaran” > “BNI Virtual Account”\n'
+                '3. Masukkan nomor virtual account\n'
+                '4. Periksa kembali detail pembayaran\n'
+                '5. Ikuti instruksi untuk menyelesaikan pembayaran\n'
+                '6. Simpan struk sebagai bukti pembayaran',
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

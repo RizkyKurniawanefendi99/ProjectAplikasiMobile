@@ -1,10 +1,22 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/Payment/PaymentSuccess.dart';
 import 'dart:async';
 
 class PayPermata extends StatefulWidget {
-  const PayPermata({super.key});
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  const PayPermata({
+    Key? key,
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   _PayPermataState createState() => _PayPermataState();
@@ -61,21 +73,18 @@ class _PayPermataState extends State<PayPermata> {
   }
 
   void onPaymentCompleted() {
-    // Handle payment completed action
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Pembayaran Selesai'),
-        content: Text('Terima kasih, pembayaran Anda telah diterima.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // Navigate back or to another page if needed
-            },
-            child: Text('OK'),
-          ),
-        ],
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaySuccess(
+          referenceNumber: '000085752257',
+          dateTime: DateTime.now(),
+          paymentMethod: 'Permata Virtual Account',
+          amount: widget.consultationFee.toDouble(),
+          senderName: 'Rizky Kurniawan Efendi',
+          productName: '',
+          choice: '',
+        ),
       ),
     );
   }
@@ -96,9 +105,14 @@ class _PayPermataState extends State<PayPermata> {
               deadline: deadline,
             ),
             SizedBox(height: 16),
-            PaymentDetails(),
+            PaymentDetails(
+              doctorName: widget.doctorName,
+              doctorSpecialty: widget.doctorSpecialty,
+              consultationFee: widget.consultationFee,
+              imagePath: widget.imagePath,
+            ),
             SizedBox(height: 16),
-            PaymentInstructions(),
+            Expanded(child: PaymentInstructions()),
             Center(
               child: ElevatedButton(
                 onPressed: onPaymentCompleted,
@@ -118,7 +132,8 @@ class PaymentTimer extends StatelessWidget {
   final String timeLeft;
   final DateTime deadline;
 
-  const PaymentTimer({super.key, required this.timeLeft, required this.deadline});
+  const PaymentTimer({Key? key, required this.timeLeft, required this.deadline})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +182,18 @@ class PaymentTimer extends StatelessWidget {
 }
 
 class PaymentDetails extends StatelessWidget {
-  const PaymentDetails({super.key});
+  final String doctorName;
+  final String doctorSpecialty;
+  final int consultationFee;
+  final String imagePath;
+
+  const PaymentDetails({
+    Key? key,
+    required this.doctorName,
+    required this.doctorSpecialty,
+    required this.consultationFee,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -189,16 +215,17 @@ class PaymentDetails extends StatelessWidget {
             Row(
               children: [
                 Image.asset(
-                    'assets/images/permata.png', // Update with Permata logo
-                    width: 40,
-                    height: 40),
+                  'assets/images/permata.png', // Update with Permata logo
+                  width: 40,
+                  height: 40,
+                ),
                 SizedBox(width: 8),
                 Text('Permata', style: TextStyle(fontSize: 16)),
               ],
             ),
             SizedBox(height: 8),
             Text(
-              '8888-1234567890', // Example VA number
+              '39338-351541', // Example VA number
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextButton(
@@ -214,7 +241,7 @@ class PaymentDetails extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Rp150.000', // Example amount
+              'Rp${consultationFee.toString()}', // Example amount
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -226,6 +253,28 @@ class PaymentDetails extends StatelessWidget {
               },
               child: Text('Salin Jumlah'),
             ),
+            Divider(),
+            Text(
+              'Detail Dokter',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(imagePath),
+                  radius: 30,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(doctorName,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(doctorSpecialty),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -234,65 +283,63 @@ class PaymentDetails extends StatelessWidget {
 }
 
 class PaymentInstructions extends StatelessWidget {
-  const PaymentInstructions({super.key});
+  const PaymentInstructions({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView(
-        children: const [
-          ExpansionTile(
-            title: Text('Panduan Pembayaran'),
-            children: [
-              ListTile(
-                title: Text('Internet Banking'),
-                subtitle: Text(
-                  '1. Buka halaman internet banking Permata (https://new.permatanet.com)\n'
-                  '2. Lakukan login dan masukkan user ID dan password Anda\n'
-                  '3. Pilih “Transfer” > “Virtual Account”\n'
-                  '4. Masukkan nomor virtual account\n'
-                  '5. Pastikan detail pembayaran seperti Nomor Virtual Account, Nama Perusahaan, Nama Pembeli, dan Total Bayar sudah sesuai\n'
-                  '6. Masukkan password dan m-Token\n'
-                  '7. Pembayaran selesai. Simpan notifikasi sebagai bukti bayar',
-                ),
+    return ListView(
+      children: const [
+        ExpansionTile(
+          title: Text('Panduan Pembayaran'),
+          children: [
+            ListTile(
+              title: Text('Internet Banking'),
+              subtitle: Text(
+                '1. Buka halaman internet banking Permata (https://permata.co.id)\n'
+                '2. Lakukan login dan masukkan user ID dan password Anda\n'
+                '3. Pilih “Transfer” > Pilih “Transfer ke Permata Virtual Account”\n'
+                '4. Masukkan nomor virtual account\n'
+                '5. Pastikan detail pembayaran seperti Nomor Virtual Account, Nama Perusahaan, Nama Pembeli, dan Total Bayar sudah sesuai\n'
+                '6. Masukkan password dan m-Token\n'
+                '7. Pembayaran selesai. Simpan notifikasi sebagai bukti bayar',
               ),
-            ],
-          ),
-          ExpansionTile(
-            title: Text('Mobile Permata'),
-            children: [
-              ListTile(
-                title: Text('Panduan Mobile Permata'),
-                subtitle: Text(
-                  '1. Buka aplikasi Mobile Permata\n'
-                  '2. Lakukan login dengan user ID dan PIN\n'
-                  '3. Pilih “m-Transfer” > “Transfer ke Virtual Account”\n'
-                  '4. Masukkan nomor virtual account\n'
-                  '5. Periksa kembali detail pembayaran\n'
-                  '6. Masukkan PIN Permata\n'
-                  '7. Pembayaran selesai dan simpan bukti pembayaran',
-                ),
+            ),
+          ],
+        ),
+        ExpansionTile(
+          title: Text('Mobile Banking Permata'),
+          children: [
+            ListTile(
+              title: Text('Panduan Mobile Banking Permata'),
+              subtitle: Text(
+                '1. Buka aplikasi Mobile Permata\n'
+                '2. Lakukan login dengan user ID dan PIN\n'
+                '3. Pilih “m-Transfer” > “Transfer ke Permata Virtual Account”\n'
+                '4. Masukkan nomor virtual account\n'
+                '5. Periksa kembali detail pembayaran\n'
+                '6. Masukkan PIN Permata\n'
+                '7. Pembayaran selesai dan simpan bukti pembayaran',
               ),
-            ],
-          ),
-          ExpansionTile(
-            title: Text('ATM Permata'),
-            children: [
-              ListTile(
-                title: Text('Panduan ATM Permata'),
-                subtitle: Text(
-                  '1. Masukkan kartu ATM dan PIN Anda\n'
-                  '2. Pilih “Transaksi Lainnya” > “Transfer” > “Ke Rek. Virtual Account”\n'
-                  '3. Masukkan nomor virtual account\n'
-                  '4. Periksa kembali detail pembayaran\n'
-                  '5. Ikuti instruksi untuk menyelesaikan pembayaran\n'
-                  '6. Simpan struk sebagai bukti pembayaran',
-                ),
+            ),
+          ],
+        ),
+        ExpansionTile(
+          title: Text('ATM Permata'),
+          children: [
+            ListTile(
+              title: Text('Panduan ATM Permata'),
+              subtitle: Text(
+                '1. Masukkan kartu ATM dan PIN Anda\n'
+                '2. Pilih “Transaksi Lain” > “Transfer” > “Ke Rek. Permata Virtual Account”\n'
+                '3. Masukkan nomor virtual account\n'
+                '4. Periksa kembali detail pembayaran\n'
+                '5. Ikuti instruksi untuk menyelesaikan pembayaran\n'
+                '6. Simpan struk sebagai bukti pembayaran',
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

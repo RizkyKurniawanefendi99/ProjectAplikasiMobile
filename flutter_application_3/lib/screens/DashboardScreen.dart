@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/screens/Artikel/NewsPage.dart';
-import 'package:flutter_application_3/screens/HealthMonotoring/HealthMonitoring.dart';
+import 'package:flutter_application_3/screens/HealthMonotoring/helthmonitoringmain.dart';
+import 'package:flutter_application_3/screens/Hospital/Hospitallist.dart';
 import 'package:flutter_application_3/screens/Quizzz/HealthQuizScreen.dart';
 import 'package:flutter_application_3/screens/buy/BuyDrugScreen.dart';
 import 'package:flutter_application_3/screens/calender/CalenderScreen.dart';
@@ -72,6 +73,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.dispose();
   }
 
+  void _openChatWithDoctor(String name, String specialty, double rating) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MessageScreen(
+          doctorName: name,
+          doctorSpecialty: specialty,
+          doctorRating: rating,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,7 +155,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height:
+              20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -155,16 +170,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   _buildFeatureIcon(Icons.local_hospital, 'Rumah Sakit', () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProfileScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => DaftarRumahSakit()),
                     );
                   }),
-                  _buildFeatureIcon(Icons.people, 'Konsultan', () {
+                  _buildFeatureIcon(Icons.quiz, 'Kuis', () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MessageScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => HealthQuizScreen()),
                     );
                   }),
-                  _buildFeatureIcon(Icons.receipt, 'Resep', () {
+                  _buildFeatureIcon(Icons.receipt, 'Artikel', () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => NewsPage()),
@@ -269,19 +286,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       );
                     },
                   ),
-                  _buildDashboardItem(
-                    context,
-                    'Kuis Kesehatan',
-                    Icons.quiz,
-                    Colors.blue[100]!,
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HealthQuizScreen()),
-                      );
-                    },
-                  ),
                 ],
               ),
             ],
@@ -324,6 +328,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Text(rating.toString()),
         ],
       ),
+      onTap: () {
+        _openChatWithDoctor(name, specialty, rating);
+      },
     );
   }
 
