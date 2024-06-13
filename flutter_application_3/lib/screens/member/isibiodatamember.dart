@@ -213,7 +213,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                   },
                   child: Text('Lanjutkan'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    primary: Colors.orange,
                     padding: EdgeInsets.symmetric(horizontal: 100, vertical: 20),
                   ),
                 ),

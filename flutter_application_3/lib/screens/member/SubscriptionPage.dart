@@ -57,7 +57,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         _showPeriodBottomSheet(context);
                       },
                       child: Text('Daftar'),
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+                      style: ElevatedButton.styleFrom(primary: Colors.orange),
                     ),
                   ],
                 ),
@@ -122,7 +122,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                             );
                         },
                         child: Text('Pilih'),
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                        style: ElevatedButton.styleFrom(primary: Colors.blue),
                       ),
                     ],
                   ),

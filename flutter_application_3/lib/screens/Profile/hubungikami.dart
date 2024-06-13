@@ -77,7 +77,7 @@ class HubungiKami extends StatelessWidget {
                               // Handle submit action
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromARGB(255, 33, 150, 243),
+                              primary: Color.fromARGB(255, 33, 150, 243),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),

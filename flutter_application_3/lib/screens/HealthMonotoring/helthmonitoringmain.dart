@@ -1,67 +1,71 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter_application_3/screens/Record/NotificationScreen.dart';
 
-class HealthMonitoringMain extends StatefulWidget {
-  @override
-  _HealthMonitoringMainState createState() => _HealthMonitoringMainState();
-}
+class HealthMonitoringMain extends StatelessWidget {
+  final Map<String, dynamic> healthStats = {
+    'Tekanan Darah': {
+      'value': '119/79 mmHg',
+      'status': 'Anda dalam kondisi baik!',
+      'icon': Icons.favorite,
+      'color': Colors.red
+    },
+    'Detak Jantung': {
+      'value': '105 bpm',
+      'status': 'Normal',
+      'icon': Icons.favorite,
+      'color': Colors.red
+    },
+    'Kalori': {
+      'value': '760 Kcal',
+      'status': '/ 800 Kcal',
+      'icon': Icons.local_fire_department,
+      'color': Colors.orange
+    },
+    'Total Langkah': {
+      'value': '6457',
+      'status': 'Kerja Bagus',
+      'icon': Icons.directions_walk,
+      'color': Color.fromARGB(255, 33, 150, 243)
+    },
+    'Suhu': {
+      'value': '36.6 C',
+      'status': 'Terakhir Update',
+      'icon': Icons.thermostat,
+      'color': Colors.purple
+    },
+  };
 
-class _HealthMonitoringMainState extends State<HealthMonitoringMain> {
-  // Contoh parameter dinamis
-  String tekananDarah = '119/79 mmHg';
-  String statusTekananDarah = 'Anda dalam kondisi baik!';
-  int detakJantung = 105;
-  int kalori = 760;
-  int totalKalori = 800;
-  int langkah = 6457;
-  double suhu = 36.6;
-  bool lariPagiSelesai = false;
-  bool yogaSelesai = false;
-  bool konsumsiSayuranSelesai = true;
-  String waktuSekarang = '';
-
-  @override
-  void initState() {
-    super.initState();
-    // Simulasi pembaruan data waktu nyata setiap 30 detik
-    Timer.periodic(Duration(seconds: 30), (timer) {
-      perbaruiDataKesehatan();
-      setState(() {
-        waktuSekarang =
-            "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}";
-      });
-    });
-  }
-
-  void perbaruiDataKesehatan() {
-    setState(() {
-      // Perbarui data kesehatan dengan nilai baru (contoh)
-      tekananDarah = '120/80 mmHg';
-      detakJantung = 110;
-      kalori = 770;
-      langkah = 6500;
-      suhu = 36.7;
-    });
-  }
+  final List<Map<String, dynamic>> activities = [
+    {
+      'title': 'Lari Pagi',
+      'duration': '20-30 menit',
+      'icon': Icons.directions_run,
+      'isCompleted': false
+    },
+    {
+      'title': 'Yoga',
+      'duration': '30 menit',
+      'icon': Icons.self_improvement,
+      'isCompleted': false
+    },
+    {
+      'title': 'Konsumsi Sayuran',
+      'duration': '205.6 Kcal',
+      'icon': Icons.local_dining,
+      'isCompleted': true
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hello, Rizky K E'),
+        title: Text('Hello, Fikri'),
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications, color: Colors.black),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NotificationScreen()),
-              );
-            },
+            icon: Icon(Icons.more_vert, color: Colors.black),
+            onPressed: () {},
           ),
         ],
       ),
@@ -71,12 +75,8 @@ class _HealthMonitoringMainState extends State<HealthMonitoringMain> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hari Ini, 18 Dec',
+              'Hari Ini, 18 Des',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Waktu: $waktuSekarang',
-              style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 10),
             Card(
@@ -96,58 +96,54 @@ class _HealthMonitoringMainState extends State<HealthMonitoringMain> {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        Icon(Icons.favorite, color: Colors.red),
+                        Icon(healthStats['Tekanan Darah']['icon'],
+                            color: healthStats['Tekanan Darah']['color']),
                       ],
                     ),
                     Text(
-                      tekananDarah,
+                      healthStats['Tekanan Darah']['value'],
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
-                    Text(statusTekananDarah),
+                    Text(healthStats['Tekanan Darah']['status']),
                   ],
                 ),
               ),
             ),
             SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                buildAnimatedHealthStatCard('Detak Jantung', '$detakJantung bpm',
-                    'Normal', Icons.favorite, Colors.red),
-                buildAnimatedHealthStatCard('Kalori', '$kalori Kcal',
-                    '/ $totalKalori Kcal', Icons.local_fire_department, Colors.orange),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                buildAnimatedHealthStatCard('Total Langkah', '$langkah', 'Kerja Bagus',
-                    Icons.directions_walk, Colors.green),
-                buildAnimatedHealthStatCard('Suhu', '$suhu C', 'Terakhir Update',
-                    Icons.thermostat, Colors.blue),
-              ],
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: healthStats.entries
+                  .where((entry) => entry.key != 'Tekanan Darah')
+                  .map((entry) => buildHealthStatCard(
+                        entry.key,
+                        entry.value['value'],
+                        entry.value['status'],
+                        entry.value['icon'],
+                        entry.value['color'],
+                      ))
+                  .toList(),
             ),
             SizedBox(height: 20),
             Text(
               'Aktivitas Anda',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            buildActivityCard('Lari Pagi', '20-30 menit', Icons.directions_run,
-                lariPagiSelesai),
-            buildActivityCard(
-                'Yoga', '30 menit', Icons.self_improvement, yogaSelesai),
-            buildActivityCard('Konsumsi Sayuran', '205.6 Kcal',
-                Icons.local_dining, konsumsiSayuranSelesai),
+            ...activities.map((activity) => buildActivityCard(
+                  activity['title'],
+                  activity['duration'],
+                  activity['icon'],
+                  activity['isCompleted'],
+                )),
           ],
         ),
       ),
     );
   }
 
-  Widget buildAnimatedHealthStatCard(
-      String title, String value, String subtitle, IconData icon, Color iconColor) {
+  Widget buildHealthStatCard(
+      String title, String value, String subtitle, IconData icon, Color color) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -157,25 +153,13 @@ class _HealthMonitoringMainState extends State<HealthMonitoringMain> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Icon(icon, color: iconColor, size: 30),
+            Icon(icon, color: color, size: 30),
             SizedBox(height: 10),
             Text(title,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
-            AnimatedTextKit(
-              animatedTexts: [
-                ColorizeAnimatedText(
-                  value,
-                  textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  colors: [
-                    Colors.black,
-                    iconColor,
-                  ],
-                ),
-              ],
-              isRepeatingAnimation: true,
-              repeatForever: true,
-            ),
+            Text(value,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             if (subtitle.isNotEmpty)
               Text(subtitle, style: TextStyle(color: Colors.grey)),
           ],
@@ -198,11 +182,7 @@ class _HealthMonitoringMainState extends State<HealthMonitoringMain> {
         trailing: isCompleted
             ? Icon(Icons.check_circle, color: Colors.green)
             : ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    isCompleted = !isCompleted;
-                  });
-                },
+                onPressed: () {},
                 child: Text('To Do'),
               ),
       ),

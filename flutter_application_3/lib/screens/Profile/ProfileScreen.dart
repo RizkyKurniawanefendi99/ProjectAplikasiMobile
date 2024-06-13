@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/Artikel/NewsPage.dart';
-import 'package:flutter_application_3/screens/HealthMonotoring/helthmonitoringmain.dart';
+import 'package:flutter_application_3/screens/Artikel/article.dart';
+import 'package:flutter_application_3/screens/HealthMonotoring/HealthMonitoring.dart';
 import 'package:flutter_application_3/screens/Profile/hubungikami.dart';
 import 'package:flutter_application_3/screens/Profile/privasi.dart';
 import 'package:flutter_application_3/screens/Profile/profilsaya.dart';
@@ -8,6 +8,7 @@ import 'package:flutter_application_3/screens/Profile/syaratdanketentuan.dart';
 import 'package:flutter_application_3/screens/Profile/tentangkami.dart';
 import 'package:flutter_application_3/screens/recordmedic/RecordMedicDashboard.dart';
 import 'package:flutter_application_3/screens/signin_screen.dart';
+
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -31,8 +32,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundImage: AssetImage(
-                        'assets/images/profile.png'), // Adjust the image path
+                    backgroundImage: AssetImage('assets/images/profile.png'), // Adjust the image path
                   ),
                   SizedBox(width: 16),
                   Column(
@@ -54,31 +54,23 @@ class ProfileScreen extends StatelessWidget {
             ),
             const Divider(),
             buildSectionTitle('Akun'),
-            buildCardWithNavigation(
-                context, 'Profil Saya', Icons.arrow_forward_ios, ProfilePage()),
-            buildCardWithNavigation(context, 'Rekam Medis',
-                Icons.arrow_forward_ios, RecordMedicDashboard()),
-            buildCardWithNavigation(context, 'Health Monitoring',
-                Icons.arrow_forward_ios, HealthMonitoringMain()),
-            buildCardWithNavigation(
-                context, 'Topik Saya', Icons.arrow_forward_ios, NewsPage()),
+            buildCardWithNavigation(context, 'Profil Saya', Icons.arrow_forward_ios, ProfilePage()),
+            buildCardWithNavigation(context, 'Rekam Medis', Icons.arrow_forward_ios, RecordMedicDashboard()),
+            buildCardWithNavigation(context, 'Health Monitoring', Icons.arrow_forward_ios, HealthMonitoringMain()),
+            buildCardWithNavigation(context, 'Topik Saya', Icons.arrow_forward_ios, HomePage()),
+
             const Divider(),
             buildSectionTitle('Aktivitas Saya'),
             buildCard(context, 'Transaksi Saya', Icons.arrow_forward_ios),
             const Divider(),
             buildSectionTitle('Aplikasi Remedic'),
-            buildCardWithNavigation(context, 'Tentang Kami',
-                Icons.arrow_forward_ios, TentangKami()),
-            buildCardWithNavigation(
-                context, 'Privasi', Icons.arrow_forward_ios, Privasi()),
-            buildCardWithNavigation(context, 'Syarat & Ketentuan',
-                Icons.arrow_forward_ios, SyaratDanKetentuan()),
-            buildCardWithNavigation(context, 'Hubungi Kami',
-                Icons.arrow_forward_ios, HubungiKami()),
+            buildCardWithNavigation(context, 'Tentang Kami', Icons.arrow_forward_ios, TentangKami()),
+            buildCardWithNavigation(context, 'Privasi', Icons.arrow_forward_ios, Privasi()),
+            buildCardWithNavigation(context, 'Syarat & Ketentuan', Icons.arrow_forward_ios, SyaratDanKetentuan()),
+            buildCardWithNavigation(context, 'Hubungi Kami', Icons.arrow_forward_ios, HubungiKami()),
             const Divider(),
             Card(
-              margin:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -87,12 +79,12 @@ class ProfileScreen extends StatelessWidget {
                 title: const Text('Keluar'),
                 trailing: const Icon(Icons.logout),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SignInScreen(),
-                    ),
-                  ); // Add logout functionality here
+                Navigator.push(
+                  context,
+                     MaterialPageRoute(
+                     builder: (context) => SignInScreen(),
+                   ),
+                );  // Add logout functionality here
                 },
               ),
             ),
@@ -136,8 +128,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCardWithNavigation(BuildContext context, String title,
-      IconData trailingIcon, Widget destination) {
+  Widget buildCardWithNavigation(BuildContext context, String title, IconData trailingIcon, Widget destination) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       shape: RoundedRectangleBorder(

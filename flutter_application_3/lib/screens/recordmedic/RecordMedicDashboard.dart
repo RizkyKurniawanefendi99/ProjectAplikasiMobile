@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/navbar/navbar.dart';
 
 void main() => runApp(MyApp());
 
@@ -40,6 +41,12 @@ class _RecordMedicDashboardState extends State<RecordMedicDashboard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+           appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -70,7 +77,6 @@ class _RecordMedicDashboardState extends State<RecordMedicDashboard>
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
@@ -325,8 +331,13 @@ class _RecordMedicDashboardState extends State<RecordMedicDashboard>
   Widget _buildBackButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        
-      },
+        Navigator.push(
+                  context,
+                     MaterialPageRoute(
+                     builder: (context) => Navbar(),
+                   ),
+                );
+              },
       child: Text('Back to Home'),
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.blue,
@@ -336,26 +347,5 @@ class _RecordMedicDashboardState extends State<RecordMedicDashboard>
     );
   }
 
-  Widget _buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.folder),
-          label: 'Records',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
-        ),
-      ],
-    );
-  }
+ 
 }

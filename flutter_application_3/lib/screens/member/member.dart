@@ -87,7 +87,7 @@ class MemberScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+                            style: ElevatedButton.styleFrom(primary: Colors.orange),
                             child: Text('Daftar'),
                           ),
                         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+
 class ProfileProvider extends StatefulWidget {
   final Widget child;
 
@@ -10,9 +11,7 @@ class ProfileProvider extends StatefulWidget {
   ProfileProviderState createState() => ProfileProviderState();
 
   static ProfileProviderState of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<_ProfileInheritedWidget>()!
-        .data;
+    return context.dependOnInheritedWidgetOfExactType<_ProfileInheritedWidget>()!.data;
   }
 }
 
@@ -74,8 +73,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   const CircleAvatar(
                     radius: 40,
-                    backgroundImage: AssetImage(
-                        'assets/images/profile.png'), // Sesuaikan path gambar
+                    backgroundImage: AssetImage('assets/images/profile.png'), // Sesuaikan path gambar
                   ),
                   const SizedBox(width: 16),
                   Column(
@@ -97,9 +95,9 @@ class ProfileScreen extends StatelessWidget {
             ),
             const Divider(),
             buildSectionTitle('Akun'),
-            buildCardWithNavigation(
-                context, 'Profil Saya', Icons.arrow_forward_ios, ProfilePage()),
+            buildCardWithNavigation(context, 'Profil Saya', Icons.arrow_forward_ios, ProfilePage()),
             buildCard(context, 'Transaksi Saya', Icons.arrow_forward_ios),
+
             const Divider(),
             buildSectionTitle('Aplikasi Remedic'),
             buildCard(context, 'Tentang Kami', Icons.arrow_forward_ios),
@@ -108,8 +106,7 @@ class ProfileScreen extends StatelessWidget {
             buildCard(context, 'Hubungi Kami', Icons.arrow_forward_ios),
             const Divider(),
             Card(
-              margin:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -162,8 +159,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCardWithNavigation(BuildContext context, String title,
-      IconData trailingIcon, Widget destination) {
+  Widget buildCardWithNavigation(BuildContext context, String title, IconData trailingIcon, Widget destination) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       shape: RoundedRectangleBorder(
@@ -245,8 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _editPhoneNumber() {
-    TextEditingController _phoneController =
-        TextEditingController(text: phoneNumber);
+    TextEditingController _phoneController = TextEditingController(text: phoneNumber);
     showDialog(
       context: context,
       builder: (context) {
@@ -254,8 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('Edit Nomor Telepon'),
           content: TextField(
             controller: _phoneController,
-            decoration:
-                InputDecoration(hintText: "Masukkan nomor telepon baru"),
+            decoration: InputDecoration(hintText: "Masukkan nomor telepon baru"),
           ),
           actions: [
             TextButton(
@@ -314,8 +308,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _editPassword() {
-    TextEditingController _passwordController =
-        TextEditingController(text: password);
+    TextEditingController _passwordController = TextEditingController(text: password);
     showDialog(
       context: context,
       builder: (context) {
@@ -357,7 +350,7 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pop(context); // Action untuk kembali
+            Navigator.pop(context);  // Action untuk kembali
           },
         ),
       ),
@@ -399,8 +392,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SizedBox(height: 10),
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                   margin: EdgeInsets.symmetric(vertical: 4.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -424,8 +416,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                   margin: EdgeInsets.symmetric(vertical: 4.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -449,8 +440,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                   margin: EdgeInsets.symmetric(vertical: 4.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -474,8 +464,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                   margin: EdgeInsets.symmetric(vertical: 4.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -501,7 +490,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
+                    primary: Colors.blueAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),

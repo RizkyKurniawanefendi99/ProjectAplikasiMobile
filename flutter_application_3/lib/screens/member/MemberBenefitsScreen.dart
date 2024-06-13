@@ -55,7 +55,7 @@ class MemberBenefitsScreen extends StatelessWidget {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.grey[300],
+                                primary: Colors.grey[300],
                               ),
                               child: Text(
                                 'Chat Dokter',
@@ -177,7 +177,7 @@ class MemberBenefitsScreen extends StatelessWidget {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
+                          primary: Colors.orange,
                         ),
                         child: Text('Daftar Sekarang'),
                       ),

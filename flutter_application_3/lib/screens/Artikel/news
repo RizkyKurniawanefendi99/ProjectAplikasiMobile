@@ -1,0 +1,136 @@
+import 'package:flutter/material.dart';
+
+class HomePage extends StatelessWidget {
+  final List<Article> articles = [
+    Article(
+      category: "Hidup sehat",
+      title: "Mengenal Amino Acid dan Fungsinya untuk Tubuh",
+      imageUrl: "https://via.placeholder.com/150",
+      content: "Amino acid atau asam amino adalah protein yang sudah dipecah melalui proses metabolisme menjadi molekul-molekul kecil. Dengan demikian, sel-sel tubuh akan lebih mudah menggunakan zat ini untuk berbagai kebutuhan, mulai dari mendukung proses pemulihan luka hingga pembentukan sel baru.",
+    ),
+    Article(
+      category: "Kesehatan",
+      title: "Ini Ciri-Ciri Kecanduan Game Online dan Cara Mengatasinya",
+      imageUrl: "https://via.placeholder.com/150",
+      content: "Kecanduan game online bisa dialami siapa saja, baik anak-anak, remaja, hingga orang dewasa. Gejala kecanduan ini dapat berupa keinginan bermain yang terus-menerus, mengabaikan kegiatan lainnya, hingga merasa gelisah saat tidak bermain.",
+    ),
+    // Add more articles as needed
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Jelajahi Informasi'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.email),
+            onPressed: () {},
+          ),
+          CircleAvatar(
+            backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Cari artikel, obat, penyakit, atau tanya jawab',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Expanded(
+              child: ListView.builder(
+                itemCount: articles.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      leading: Image.network(articles[index].imageUrl),
+                      title: Text(articles[index].title),
+                      subtitle: Text(articles[index].category),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NewsDetailPage(article: articles[index]),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Article {
+  final String category;
+  final String title;
+  final String imageUrl;
+  final String content;
+
+  Article({
+    required this.category,
+    required this.title,
+    required this.imageUrl,
+    required this.content,
+  });
+}
+
+class NewsDetailPage extends StatelessWidget {
+  final Article article;
+
+  NewsDetailPage({required this.article});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(article.title),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.network(article.imageUrl),
+            SizedBox(height: 8),
+            Text(
+              article.title,
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              article.content,
+              style: TextStyle(fontSize: 16),
+            ),
+            // Add more content here
+            SizedBox(height: 16),
+            Text(
+              'Jenis-Jenis Amino Acid',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Asam amino terdiri dari berbagai jenis, tepatnya ada 20 jenis asam amino yang berperan penting bagi kesehatan tubuh. Namun, secara umum, asam amino tergolong menjadi 2 jenis, yaitu:',
+              style: TextStyle(fontSize: 16),
+            ),
+            // Add more content here
+          ],
+        ),
+      ),
+    );
+  }
+}
